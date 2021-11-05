@@ -1,4 +1,4 @@
-# ModernJS
+# Modern JavaScript Sandbox
 
 Building projects with vanilla JavaScript. (No frameworks or libraries used)
 

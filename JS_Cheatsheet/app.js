@@ -1,14 +1,37 @@
-'use strict';
-
 // Chapter 1: INTRODUCTION:
-// Single line comment
+// Strict mode:
+'use strict'; 
+// 'use strict'; when declared at the beginning of a script, it has global scope (all code in the script will execute in strict mode)
+// You can use strict mode in all your programs. 
+// It helps you to write cleaner code, like preventing you from using undeclared variables.
+// Ex: 1
+x = 3.14;       // This will cause an error because x is not declared
+// Ex:2
+myFunction();
+function myFunction() {
+  y = 3.14;   // This will also cause an error because y is not declared
+}
+// 'use strict'; when declared inside a function, it has local scope (only the code inside the function is in strict mode):
+// Ex:3
+x = 3.14;       // This will not cause an error.
+myFunction();
+function myFunction() {
+  "use strict";
+  y = 3.14;   // This will cause an error
+}
+
+// Comments:
+// Single line comment.
+
 /* 
 Multi-line 
 comments 
 */
+
 // alert("Hello World!");
 
 // console.log():
+// If your browser supports debugging, you can use console.log() to display JavaScript values in the debugger window=
 console.log('Hi there!'); // Prints: Hi there!
 
 // String Concatenation and String Interpolation:
@@ -136,7 +159,7 @@ console.log(oldAge); // 30
 
 //Reference value example:
 const me = {
-  name = 'Valyn',
+  name : 'Valyn',
   age: 30,
 };
 const friend = me;
@@ -193,7 +216,7 @@ console.log('After marriage:' , jessicaCopy); // Jessica Davis 27 ['Alice', 'Bob
 jessicaCopy.family.push('Mary');
 jessicaCopy.family.push('Jake');
 console.log('Before marriage: ', jessica2); // Jessica Williams 27 ['Alice', 'Bob', 'Mary', 'Jake']
-console.log('After marriage:' , jessicaCopy); // Jessica Williams 27 ['Alice', 'Bob', 'Mary', 'Jake']
+console.log('After marriage:' , jessicaCopy); // Jessica Davis 27 ['Alice', 'Bob', 'Mary', 'Jake']
 // Here the family object gets changed both places.
 // For 1st level cloning Object.assign() is ok but for deep cloning we use a library like 'lodash'
 
@@ -237,8 +260,7 @@ x -= 4; //x = x - 4 = 9
 x *= 4; //x = x * 4 = 100
 x /= 3; //x = x / 3 = 5
 x++; // x = x + 1
-x--;
-x--;
+x--; // x = x - 1
 console.log(x);
 
 // Logical Operator ||

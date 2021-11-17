@@ -912,7 +912,7 @@ const types = [];
 // ...
 // console.log(val[4];
 
-for(let i = 0; i <= val.length; i++){
+for(let i = 0; i < val.length; i++){
 
   //reading from val array
   console.log(val[i], typeof val[i]);
@@ -952,7 +952,7 @@ for(let i = 0; i <= valyn.length; i++){
   console.log(valyn[i], typeof valyn[i]);
 }
 
-// Nested For Loop:
+// Nested FOR Loop:
 // A nested for loop is when a for loop runs inside another for loop.
 // The inner loop will run all its iterations for each iteration of the outer loop.
 for (let outer = 0; outer < 2; outer += 1) {
@@ -978,7 +978,7 @@ for(let excercise = 1; excercise < 4; excercise++){
   }
 }
 
-// While Loop
+// WHILE Loop
 // The while loop creates a loop that is executed as long as a specified condition evaluates to true. The loop will continue to run until the condition evaluates to false. The condition is specified before the loop, and usually, some variable is incremented or altered in the 'while' loop body to determine when the loop should stop.
 
 while (condition) {
@@ -1050,14 +1050,13 @@ let plusFive = (number) => {
 };
  
 plusFive(3); // 8
-// Since f has a function value, it can be invoked. 
-f(9); // 14
+// Since it has a function value, it can be invoked. 
 
 // Callback Functions:
 // In JavaScript, a callback function is a function that is passed into another function as an argument. This function can then be invoked during the execution of that higher order function (that it is an argument of).
 // Since, in JavaScript, functions are objects, functions can be passed as arguments.
 const isEven = (n) => {
-  return n % 2 == 0;
+  return n % 2 == 0; //  n is a number that when divided by 2 has no remainder
 }
  
 let printMsg = (evenFunc, num) => {
@@ -1251,11 +1250,11 @@ const changeItUp = (num, obj) => {
 changeItUp(origNum, origObj);
  
 // Will output 8 since integers are passed by value.
-console.log(origNum);
+console.log(origNum); // 8
  
 // Will output 'red' since objects are passed 
 // by reference and are therefore mutable.
-console.log(origObj.color);
+console.log(origObj.color); // red
 
 // JavaScript Object Methods:
 // JavaScript objects may have property values that are functions. These are referred to as object methods.
@@ -1366,7 +1365,7 @@ calcAge1(1991);
 const jake = {
   year: 1991,
   calcAge: function(){
-    console.log(this); // points to the jonas object 
+    console.log(this); // points to the jake object 
     console.log(2021 - this.year);
   }
 }

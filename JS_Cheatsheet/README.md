@@ -1,5 +1,6 @@
 # JavaScript Quick Reference Cheatsheet
 ## Introduction:
+* Strict mode 
 * Comments
 * Console.log()
 * String Concatenation and String Interpolation
@@ -48,7 +49,12 @@
 * Index
 * Property .length
 * Method .push()
+* Method .unshift()
 * Method .pop()
+* Method .shift()
+* Method .indexOf()
+* ES6 Method .includes()
+* Method .concat()
 
 ## Loops:
 * For Loop

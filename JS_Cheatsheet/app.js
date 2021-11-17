@@ -300,7 +300,7 @@ console.log(!hasDriversLicense); // false
 // }
 
 const isTired = false;
-console.log(hasDriversLicense && hasGoodVision && isTired); // true
+console.log(hasDriversLicense && hasGoodVision && isTired); // false
 console.log(hasDriversLicense || hasGoodVision || isTired); // true
 
 if(hasDriversLicense && hasGoodVision && !isTired){
@@ -430,7 +430,7 @@ if (size > 100) {
 // In JavaScript, values evaluate to true or false when evaluated as Booleans.
 // Values that evaluate to true are known as truthy
 // Values that evaluate to false are known as falsy
-// Falsy values include false, 0, empty strings '', null undefined, and NaN. All other values are truthy.
+// Falsy values include false, 0, empty strings '', null, undefined, and NaN. All other values are truthy.
 console.log(Boolean(0)); // false
 console.log(Boolean(undefined)); // false
 console.log(Boolean('Jonas')); // true
@@ -534,8 +534,8 @@ const age = calcAge(1991, 'Val');
 const add2 = function(num1,num2) { // function expression defined first
   return num1 + num2;
 }
-const add2 = add2(1,2); // function called here after it has been defined above
-console.log(add2);
+const add3 = add2(1,2); // function called here after it has been defined above
+console.log(add3);
 
 // Ex 2:
 const dog = function() {
@@ -700,11 +700,11 @@ elem.innerHTML = x + " " + y;           // Display x and y
 
 y = 7;    // Assign 7 to y
 
-console.log(addDecl(2, 3)); // 5 Here we are able to call the function declaration in before it was defined in the code. it supports hoisting.
+console.log(addDecl(2, 3)); // 5. Here we are able to call the function declaration in before it was defined in the code. it supports hoisting.
 console.log(addExpr(2, 3)); // Uncaught ReferenceError: Cannot access 'addExpr' before initialization.
 console.log(addArrow(2, 3)); // Uncaught ReferenceError: Cannot access 'addArrow' before initialization.
 console.log(addExpr1(2, 3)); // Uncaught TypeError: addExpr1 is not a function
-console.log(addArrow1(2, 3)); // Uncaught TypeError: addExpr1 is not a function
+console.log(addArrow1(2, 3)); // Uncaught TypeError: addArrow1 is not a function
 console.log(addArrow1); // undefined
 
 // Function declaration and hoisting
@@ -844,6 +844,7 @@ if(myArray1.includes(100)){
 // Mutable Arrays:
 // JavaScript arrays are mutable, meaning that the values they contain can be changed.
 // Even if they are declared using const, the contents can be manipulated by reassigning internal values or using methods like .push() and .pop().
+// In JavaScript, only objects and arrays are mutable, not primitive values.
 const names = ['Alice', 'Bob'];
  
 names.push('Carl');

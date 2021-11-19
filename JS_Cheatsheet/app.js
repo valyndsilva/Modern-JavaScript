@@ -1324,6 +1324,15 @@ console.log(valy.getSummary());
 
 
 // this Keyword:
+// The JavaScript this keyword refers to the object it belongs to.
+// It has different values depending on where it is used:
+// 1. In a method, this refers to the owner object.
+// 2. Alone, this refers to the global object.
+// 3. In a function, this refers to the global object.
+// 4. In a function, in strict mode, this is undefined.
+// 5. In an event, this refers to the element that received the event.
+// 6. Methods like call(), and apply() can refer this to any object.
+
 // Rules:
 // 1. Method: this = Object that is calling the method
 // 2. Simple function call: this = undefined (for strict mode) or points to global object window if not in strict mode.
@@ -1332,7 +1341,7 @@ console.log(valy.getSummary());
 
 // this does NOT point to the function itself and also NOT the variable environment of the function.
 
-// 1. 'this' Keyword inside an object function (Method) (object scope)
+// 1. 'this' Keyword inside an object function (Method) (Object Scope)
 // The reserved keyword 'this' refers to a method’s calling object, and it can be used to access properties belonging to that object.
 // The 'this' keyword inside the method (object function) is used to refer to the object itself and access properties within the object.
 const cat = {
@@ -1414,10 +1423,10 @@ myObj.loggerB();    // 'abc'
 
 // this is NOT static. It depends on how the function is called, and it's value is only assigned when the function is called.
 
-// Regular Functions vs Arrow Functions using 'this' keyyword:
+// Regular Functions vs Arrow Functions using 'this' keyword:
 // var firstName = 'Manuel';
 const jake = {
-  firstName = 'Jake';
+  firstName : 'Jake',
   year: 1991,
   calcAge: function(){
     console.log(this); // points to the jake object 
@@ -1471,6 +1480,7 @@ jake.calcAge(); // calcAge is a regular function used as a method and not an arr
   addExpr(2, 5);
   addExpr(2, 5, 8, 12); // this is valid to add more arguments as it will also store 8 and 12 just without a name in the Arguments array
 
+  // Arguments keyword does not exist in arrow functions. It returns undefined.
   var addArrow = (a, b) => {
     console.log(arguments);
     return a + b;
@@ -1561,7 +1571,7 @@ const [x, y, z] = arr; // destructuring the array
 console.log(x, y, z); // 2, 3, 4
 console.log(arr); [2, 3, 4]
 
-const restaurant = {
+const restaurantPaz = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
@@ -1571,7 +1581,7 @@ const restaurant = {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]]
   },
 };
-let [main, secondary] = restaurant.categories;
+let [main, secondary] = restaurantPaz.categories;
 console.log(main, secondary);  // Italian Pizzeria
 const [main, , secondary] // adding an empty hole in between
 console.log(main, secondary);  // Italian Vegetarian
@@ -1588,7 +1598,7 @@ console.log(main, secondary); // In destructuing we didn't need a temp variable
 
 // Trick 2# We can have a function return an array and immediately destruct the result into different variables. This allows to return multiple values from a function.
 // Here we receive 2 return values from a function.
-const [starter, mainCourse] = restaurant.order[2, 0];
+const [starter, mainCourse] = restaurantPaz.order[2, 0];
 console.log(starter, mainCourse); // Garlic Bread Pizza
 
 // Destructuring a nested array
@@ -1630,7 +1640,8 @@ const newRestaurant = {
   order: function(starterIndex, mainIndex){
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]]
   },
-  orderDelivery: function(starterIndex = 1, mainIndex = 0, time = '20:00', address){
+  // destructuring the object and setting default values
+  orderDelivery: function({starterIndex = 1, mainIndex = 0, time = '20:00', address}){
     console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`);
   },
   orderPasta: function(ing1, ing2, ing3){
@@ -1644,11 +1655,13 @@ const newRestaurant = {
 };
 // Calling a method with an object
 newRestaurant.orderDelivery({ 
-  time: '22:30',
-  address: 'Via del Sole, 21',
-  mainIndex: 2,
   starterIndex: 2,
+  mainIndex: 2,
+  address: 'Via del Sole, 21',
+  time: '22:30',
 })
+
+// newRestaurant.orderDelivery( 2,2,'Via del Sole, 21','22:30')
 
 // uses default values for mainIndex = 0 and time = '20:00'
 newRestaurant.orderDelivery({ 

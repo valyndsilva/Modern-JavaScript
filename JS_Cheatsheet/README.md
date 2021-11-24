@@ -58,7 +58,8 @@
 
 ## Loops:
 * For Loop
-* Looping Through Arrays with Property .length
+* Looping Through Arrays with Property .length (Reverse Loop / Looping Backwards)
+* Looping, Breaking and Continuing Through Arrays
 * Nested For Loop
 * While Loop
 * Do…While Statement
@@ -91,6 +92,14 @@
 * Javascript factory functions
 * JavaScript destructuring assignment shorthand syntax
 * shorthand property name syntax for object creation
+* Destructuring Arrays
+* Destructuring Objects
+* Spread Operator ...
+* For...Of Loop (Iterating over an Array, String, Map)
+* REST Patterns And Parameters
+* Destructuring in REST
+* Shortcircuiting && and ||
+* Nullish Coalescing Operator ??
 
 ## Classes:
 * new keyword
@@ -100,7 +109,7 @@
 * extends
 
 ## Promises:
-* States of a JavaScript Promise (pending, resolved, rejected)
+* States of a JavaScript Promise (pending, fulfilled (resolved), rejected)
 * .catch() method for handling rejection / error handling
 * JavaScript Promise.all() method
 * Executor function of JavaScript Promise object
@@ -116,10 +125,9 @@
 * Async Await Promises
 * Using async await syntax
 * JavaScript async…await advantage
-
-## Strict Mode:
-* Examples
-* Note allowed in Strict mode
+* Async Function Error Handling using try..catch
+* JSON.parse() method
+* JavaScript aysnc await operator
 
 ## Requests:
 * HTTP GET request
@@ -129,8 +137,13 @@
 * XMLHttpRequest GET Request Requirements
 * HTTP POST request
 * HTTP POST request with the XMLHttpRequest API
+* JSON.stringify() method
 * Promise URL parameter FETCH API
 * ok property FETCH API
 * Fetch API Function
 * JSON Formatted response body
 * async await syntax
+
+## Strict Mode:
+* Examples
+* Note allowed in Strict mode

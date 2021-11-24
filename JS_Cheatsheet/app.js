@@ -1910,14 +1910,14 @@ newRestaurant.orderPizza && newRestaurant.orderPizza('mushrooms', 'spinach');
 
 // NULLISH COALESCING OPERATOR ??
 // The nullish coalescing operator (??) is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand.
-// This can be contrasted with the logical OR (||) operator, which returns the right-hand side operand if the left operand is any falsy value, not only null or undefined. 
-// In other words, if you use || to provide some default value to another variable foo, you may encounter unexpected behaviors if you consider some falsy values as usable (e.g., '' or 0).
+// The logical OR (||) operator, returns the right-hand side operand if the left operand is any falsy value, not only null or undefined. 
+// So, if you use || to provide some default value to another variable foo, you may encounter unexpected behaviors if you consider some falsy values as usable (e.g., '' or 0).
 
 // Nullish coalescing operator examples
-const foo = null ?? 'default string';
+const foo = null ?? 'default string'; // returns RHS operand if LHS operand is null or undefined
 console.log(foo); // output: "default string"
 
-const baz = 0 ?? 42;
+const baz = 0 ?? 42; // returns LHS operand since it's NOT null or undefined
 console.log(baz); // output: 0
 
 newRestaurant.numGuests = 0;
@@ -1928,17 +1928,13 @@ console.log(guests3);  // 10 (this is a bug)
 const guestCorrect = newRestaurant.numGuests ?? 10;
 console.log(guestCorrect); // 0
 
-
-
-
 // Looping Arrays: For Loop
 const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 
 
-
 // CHAPTER 9: CLASSES:
 // JavaScript supports the concept of classes as a syntax for creating objects. Classes specify the shared properties and methods that objects produced from the class will have.
-// When an object is created based on the class, the new object is referred to as an instance of the class. New instances are created using the new keyword.
+// *** When an object is created based on the class, the new object is referred to as an INSTANCE of the class. New instances are created using the 'new' keyword.
 // The code sample shows a class that represents a Song. A new object called mySong is created underneath and the .play() method on the class is called. The result would be the text Song playing! printed in the console.
 
 // new keyword:
@@ -1953,7 +1949,7 @@ class Song {
   }
 }
  
-const mySong = new Song();
+const mySong = new Song(); //mySong is an object created based on the class Song, and is referred to as an INSTANCE of the class.
 mySong.play();
 
 // Class Constructor:
@@ -1982,7 +1978,12 @@ class Song {
 
 
 // Static Methods:
-// Within a JavaScript class, the static keyword defines a static method for a class. Static methods are not called on individual instances of the class, but are called on the class itself. Therefore, they tend to be general (utility) methods.
+// Within a JavaScript class, the static keyword defines a static method for a class. Static methods are not called on individual instances of the class, but are called on the class itself. 
+// Therefore, they tend to be general (utility) methods.
+// A static method (or static function) is a method defined as a member of an object but is accessible directly from an API object's constructor, rather than from an object instance created via the constructor.
+// In a Web API, a static method is one which is defined by an interface but can be called without instantiating an object of that type first.
+// Methods called on object instances are called instance methods.
+
 class Dog {
   constructor(name) {
     this._name = name;  
@@ -1999,14 +2000,15 @@ class Dog {
 }
  
 const myDog = new Dog('Buster');
-myDog.introduce();
+myDog.introduce(); // instance method
  
 // Calling the static method
 Dog.bark();
 
 // extends:
 // JavaScript classes support the concept of inheritance — a child class can extend a parent class. This is accomplished by using the extends keyword as part of the class definition.
-// Child classes have access to all of the instance properties and methods of the parent class. They can add their own properties and methods in addition to those. A child class constructor calls the parent class constructor using the super() method.
+// Child classes have access to all of the instance properties and methods of the parent class. They can add their own properties and methods in addition to those. 
+// A child class constructor calls the parent class constructor using the super() method.
 // The super() method refers to the parent class. By calling the super() method in the constructor method, we call the parent's constructor method and gets access to the parent's properties and methods.
 
 // Parent class
@@ -2032,13 +2034,48 @@ const mySong = new Song({
 });
 
 // CHAPTER 10: PROMISES:
-// A JavaScript Promise is an object that can be used to get the outcome of an asynchronous operation when that result is not instantly available.
+// The JavaScript Promise object represents the eventual completion (or failure) of an asynchronous operation and its resulting value.
 // Since JavaScript code runs in a non-blocking manner, promises become essential when we have to wait for some asynchronous operation without holding back the execution of the rest of the code.
 
+
+let myPromise = new Promise(function(resolve, reject) {
+  // "Producing Code" (May take some time)
+  
+    resolve(); // when successful
+    reject();  // when error
+  });
+  
+  // "Consuming Code" (Must wait for a fulfilled Promise)
+  myPromise.then(
+    function(value) { /* code if successful */ },
+    function(error) { /* code if some error */ }
+  );
+
 // States of a JavaScript Promise:
-// A JavaScript Promise object can be in one of three states: pending, resolved, or rejected.
-// While the value is not yet available, the Promise stays in the pending state. Afterwards, it transitions to one of the two states: resolved or rejected.
-// A resolved promise stands for a successful completion. Due to errors, the promise may go in the rejected state.
+// A JavaScript Promise object can be in one of three states: pending, fulfilled (resolved), or rejected.
+// pending: initial state, neither fulfilled nor rejected. The result is undefined.
+// fulfilled (resolved): meaning that the operation was completed successfully. The result is a value.
+// rejected: meaning that the operation failed. The result is an error object.
+
+
+// A pending promise can either be fulfilled with a value or rejected with a reason (error). 
+
+// The Promise object supports two properties: state and result.
+//  myPromise.state	      myPromise.result
+// "pending"	            undefined
+// "fulfilled"	          a result value
+// "rejected"	            an error object
+
+// You cannot access the Promise properties state and result. You must use a Promise method .then() to handle promises.
+
+myPromise.then(
+  function(value) { /* code if successful */ },
+  function(error) { /* code if some error */ }
+);
+
+// Promise.then() takes two arguments, a callback for success and another for failure. Both are optional, so you can add a callback for success or failure only.
+// As the Promise.prototype.then() and Promise.prototype.catch() methods return promises, they can be chained.
+
 // In the given code block, if the Promise is on resolved state, the first parameter holding a callback function of the then() method will print the resolved value. Otherwise, an alert will be shown.
 const promise = new Promise((resolve, reject) => {
   const res = true;
@@ -2050,11 +2087,14 @@ const promise = new Promise((resolve, reject) => {
     reject(Error('Error'));
   }
 });
- 
-promise.then((res) => console.log(res), (err) => alert(err));
+
+// The then() method returns a Promise. It takes up to two arguments: callback functions for the success and failure cases of the Promise.
+promise.then((res) => console.log(res), (err) => alert(err)); 
+// output: Resolved! and it also returns a Promise with Prototype: Promise, PromiseState: "fulfilled" and PromiseResult: undefined.
 
 // The .catch() method for handling rejection:
-// The function passed as the second argument to a .then() method of a promise object is used when the promise is rejected. An alternative to this approach is to use the JavaScript .catch() method of the promise object. The information for the rejection is available to the handler supplied in the .catch() method.
+// The function passed as the second argument to a .then() method of a promise object is used when the promise is rejected. 
+// An alternative to this approach is to use the JavaScript .catch() method of the promise object. The information for the rejection is available to the handler supplied in the .catch() method.
 const promise = new Promise((resolve, reject) => {  
   setTimeout(() => {
     reject(Error('Promise Rejected Unconditionally.'));
@@ -2070,7 +2110,9 @@ promise.catch((err) => {
 });
 
 // JavaScript Promise.all():
-// The JavaScript Promise.all() method can be used to execute multiple promises in parallel. The function accepts an array of promises as an argument. If all of the promises in the argument are resolved, the promise returned from Promise.all() will resolve to an array containing the resolved values of all the promises in the order of the initial array. Any rejection from the list of promises will cause the greater promise to be rejected.
+// The JavaScript Promise.all() method can be used to execute multiple promises in parallel. The function accepts an array of promises as an argument. 
+// If all of the promises in the argument are resolved, the promise returned from Promise.all() will resolve to an array containing the resolved values of all the promises in the order of the initial array. 
+// Any rejection from the list of promises will cause the greater promise to be rejected.
 
 // In the code block, 3 and 2 will be printed respectively even though promise1 will be resolved after promise2.
 const promise1 = new Promise((resolve, reject) => {
@@ -2085,12 +2127,14 @@ const promise2 = new Promise((resolve, reject) => {
 });
  
 Promise.all([promise1, promise2]).then((res) => {
-  console.log(res[0]);
-  console.log(res[1]);
+  console.log(res[0]); // 3
+  console.log(res[1]); // 2
 });
 
 // Executor function of JavaScript Promise object:
-// A JavaScript promise’s executor function takes two functions as its arguments. The first parameter represents the function that should be called to resolve the promise and the other one is used when the promise should be rejected. A Promise object may use any one or both of them inside its executor function.
+// A JavaScript promise’s executor function takes two functions as its arguments. 
+// The first parameter represents the function that should be called to resolve the promise and the other one is used when the promise should be rejected. 
+// A Promise object may use any one or both of them inside its executor function.
 // In the given example, the promise is always resolved unconditionally by the resolve function. The reject function could be used for a rejection.
 const executorFn = (resolve, reject) => {
   resolve('Resolved!');
@@ -2108,11 +2152,7 @@ const promise = new Promise((resolve, reject) => {
   }, 200);
 });
  
-promise.then((res) => {
-  console.log(res);
-}, (err) => {
-  alert(err);
-});
+promise.then((res) => { console.log(res); }, (err) => { alert(err); });
 
 // setTimeout():
 // setTimeout() is an asynchronous JavaScript function that executes a code block or evaluates an expression through a callback function after a delay set in milliseconds.
@@ -2132,11 +2172,11 @@ const promise = new Promise((resolve, reject) => {
 });
  
 const twoStars = (star) => {  
-  return (star + star);
+  return (star + star); // **
 };
  
 const oneDot = (star) => {  
-  return (star + '.');
+  return (star + '.'); // *.
 };
  
 const print = (val) => {
@@ -2144,7 +2184,7 @@ const print = (val) => {
 };
  
 // Chaining them all together
-promise.then(twoStars).then(oneDot).then(print);
+promise.then(twoStars).then(oneDot).then(print); // **.
 
 // Creating a Javascript Promise object:
 // An instance of a JavaScript Promise object is created using the new keyword.
@@ -2160,13 +2200,8 @@ const promise = new Promise(executorFn);
 // In the code block, a couple of .then() methods are chained together. Each method deals with the resolved value of their respective promises.
 const promise = new Promise(resolve => setTimeout(() => resolve('dAlan'), 100));
  
-promise.then(res => {
-  return res === 'Alan' ? Promise.resolve('Hey Alan!') : Promise.reject('Who are you?')
-}).then((res) => {
-  console.log(res)
-}, (err) => {
-  alert(err)
-});
+promise.then(res => { return res === 'Alan' ? Promise.resolve('Hey Alan!') : Promise.reject('Who are you?')})
+       .then((res) => { console.log(res) }, (err) => { alert(err) });
 
 // CHAPTER 11: ASYNC AND AWAIT:
 
@@ -2199,8 +2234,8 @@ const msg = async function() { //Async Function Expression
 }
  
 const msg1 = async () => { //Async Arrow Function
-  const msg = await helloWorld();
-  console.log('Message:', msg);
+  const msg1 = await helloWorld();
+  console.log('Message:', msg1);
 }
  
 msg(); // Message: Hello World! <-- after 2 seconds
@@ -2224,10 +2259,13 @@ async function msg() {
 msg(); // Message: Hello World! <-- after 2 seconds
 
 // Using async await syntax:
-// Constructing one or more promises or calls without await can allow multiple async functions to execute simultaneously. Through this approach, a program can take advantage of concurrency, and asynchronous actions can be initiated within an async function. Since using the await keyword halts the execution of an async function, each async function can be awaited once its value is required by program logic.
+// Constructing one or more promises or calls without await can allow multiple async functions to execute simultaneously. 
+// Through this approach, a program can take advantage of concurrency, and asynchronous actions can be initiated within an async function. 
+// Since using the await keyword halts the execution of an async function, each async function can be awaited once its value is required by program logic.
 
 // JavaScript async…await advantage:
-// The JavaScript async...await syntax allows multiple promises to be initiated and then resolved for values when required during execution of the program. As an alternate to chaining .then() functions, it offers better maintainablity of the code and a close resemblance synchronous code.
+// The JavaScript async...await syntax allows multiple promises to be initiated and then resolved for values when required during execution of the program. 
+// As an alternate to chaining .then() functions, it offers better maintainablity of the code and a close resemblance synchronous code.
 
 // Async Function Error Handling:
 // JavaScript async functions uses try...catch statements for error handling. This method allows shared error handling for synchronous and asynchronous code.
@@ -2235,13 +2273,27 @@ let json = '{ "age": 30 }'; // incomplete data
  
 try {
   let user = JSON.parse(json); // <-- no errors
-  alert( user.name ); // no name!
+  alert( user.age ); // age exists so it would be 30
+  alert( user.name ); // no name! so undefined
 } catch (e) {
   alert( "Invalid JSON data!" );
 }
 
+// The JSON.parse() method parses a JSON string, constructing the JavaScript value or object described by the string. 
+const json = '{"result":true, "count":42}';
+const obj = JSON.parse(json);
+
+console.log(obj.count);
+// expected output: 42
+
+console.log(obj.result);
+// expected output: true
+
+
 // JavaScript aysnc await operator:
-// The JavaScript async...await syntax in ES6 offers a new way write more readable and scablable code to handle promises. A JavaScript async function can contain statements preceded by an await operator. The operand of await is a promise. At an await expression, the execution of the async function is paused and waits for the operand promise to resolve. The await operator returns the promise’s resolved value. An await operand can only be used inside an async function.
+// The JavaScript async...await syntax in ES6 offers a new way write more readable and scablable code to handle promises. 
+// A JavaScript async function can contain statements preceded by an await operator. The operand of await is a promise. 
+// At an await expression, the execution of the async function is paused and waits for the operand promise to resolve. The await operator returns the promise’s resolved value. An await operand can only be used inside an async function.
 function helloWorld() {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -2265,7 +2317,8 @@ msg(); // Message: Hello World! <-- after 2 seconds
 
 // JSON: JavaScript Object Notation:
 // JSON or JavaScript Object Notation is a data format suitable for transporting data to and from a server.
-// It is essentially a slightly stricter version of a Javascript object. A JSON object should be enclosed in curly braces and may contain one or more property-value pairs. JSON names require double quotes, while standard Javascript objects do not.
+// It is essentially a slightly stricter version of a Javascript object. A JSON object should be enclosed in curly braces and may contain one or more property-value pairs. 
+// JSON names require double quotes, while standard Javascript objects do not.
 const jsonObj = {
   "name": "Rick",
   "id": "11A",
@@ -2290,10 +2343,10 @@ const requestUrl = 'http://mysite.com/api/vendor?name=kavin&id=35412';
 // XMLHttpRequest GET Request Requirements:
 // The request type, response type, request URL, and handler for the response data must be provided in order to make an HTTP GET request with the JavaScript XMLHttpRequest API.
 // The URL may contain additional data in the query string. For an HTTP GET request, the request type must be GET.
-const req = new XMLHttpRequest();
-req.responseType = 'json';
-req.open('GET', '/myendpoint/getdata?id=65');
-req.onload = () => {
+const req = new XMLHttpRequest(); // request type
+req.responseType = 'json'; // response type
+req.open('GET', '/myendpoint/getdata?id=65'); // request url
+req.onload = () => { // response handler
   console.log(req.response);
 };
  
@@ -2304,20 +2357,35 @@ req.send();
 // For a POST request, the new information is stored in the body of the request.
 
 // HTTP POST request with the XMLHttpRequest API:
-// To make an HTTP POST request with the JavaScript XMLHttpRequest API, a request type, response type, request URL, request body, and handler for the response data must be provided. The request body is essential because the information sent via the POST method is not visible in the URL. The request type must be POST for this case. The response type can be a variety of types including array buffer, json, etc.
+// To make an HTTP POST request with the JavaScript XMLHttpRequest API, a request type, response type, request URL, request body, and handler for the response data must be provided. 
+// The request body is essential because the information sent via the POST method is not visible in the URL. The request type must be POST for this case. The response type can be a variety of types including array buffer, json, etc.
 const data = {
   fish: 'Salmon',
   weight: '1.5 KG',
   units: 5
 };
-const xhr = new XMLHttpRequest();
-xhr.open('POST', '/inventory/add');
-xhr.responseType = 'json';
-xhr.send(JSON.stringify(data));
+const xhr = new XMLHttpRequest(); // request type
+xhr.responseType = 'json';  // response type
+xhr.open('POST', '/inventory/add'); // request url
+xhr.send(JSON.stringify(data)); // request body
  
-xhr.onload = () => {
+xhr.onload = () => { // response handler
   console.log(xhr.response);
 };
+
+// The JSON.stringify() method:
+// It converts a JavaScript object or value to a JSON string, optionally replacing values if a replacer function is specified or optionally including only the specified properties if a replacer array is specified.
+console.log(JSON.stringify({ x: 5, y: 6 }));
+// expected output: "{"x":5,"y":6}"
+
+console.log(JSON.stringify([new Number(3), new String('false'), new Boolean(false)]));
+// expected output: "[3,"false",false]"
+
+console.log(JSON.stringify({ x: [10, undefined, function(){}, Symbol('')] }));
+// expected output: "{"x":[10,null,null,null]}"
+
+console.log(JSON.stringify(new Date(2006, 0, 2, 15, 4, 5)));
+// expected output: ""2006-01-02T15:04:05.000Z""
 
 // Promise URL parameter FETCH API:
 // A JavaScript Fetch API is used to access and manipulate requests and responses within the HTTP pipeline, fetching resources asynchronously across a network.
@@ -2334,7 +2402,8 @@ fetch('url')
 );
 
 // ok property FETCH API:
-// In a Fetch API function fetch() the ok property of a response checks to see if it evaluates to true or false. In the code example the .ok property will be true when the HTTP request is successful. The .ok property will be false when the HTTP request is unsuccessful.
+// In a Fetch API function fetch() the ok property of a response checks to see if it evaluates to true or false. In the code example the .ok property will be true when the HTTP request is successful. 
+// The .ok property will be false when the HTTP request is unsuccessful.
   fetch(url, {
     method: 'POST',
     headers: {
@@ -2352,7 +2421,8 @@ fetch('url')
   })
 
 // Fetch API Function:
-// The Fetch API function fetch() can be used to create requests. Though accepting additional arguments, the request can be customized. This can be used to change the request type, headers, specify a request body, and much more as shown in the example block of code.
+// The Fetch API function fetch() can be used to create requests. Though accepting additional arguments, the request can be customized. 
+// This can be used to change the request type, headers, specify a request body, and much more as shown in the example block of code.
 fetch('https://api-to-call.com/endpoint', {
   method: 'POST',
  body: JSON.stringify({id: "200"})
@@ -2393,7 +2463,47 @@ const response = await fetch(endpoint, {cache: 'no-cache'});
   }
 }
 
-// CHAPTER 12: STRICT MODE:
+
+// CHAPTER 13: BROWSER COMPATIBILITY AND TRANSPILATION:
+
+// Running scripts with npm:
+// Command line shortcuts can be defined in a package.json file in a “scripts” object. This is used to combine multiple command line instructions in one command. These shortcuts can be executed from the terminal with the npm run command. For example, a script command named "build" can be executed with npm run build.
+
+// Babel Package Installation:
+// The babel-cli JavaScript package contains Babel command line tools. The babel-preset-env JavaScript package is used to transpile ES6 JavaScript code to ES5. They should be installed with the flag -D in the command line instruction like npm install -D babel-preset-env to be installed as development dependency.
+
+// ES5 & ES6 Compatibility:
+// ECMAScript (ES) is a scripting language specification standardized by Ecma International for Javascript. ES5 is the older JavaScript version which is supported by all web browsers while the ES6 version, released in 2015, is not supported by all web browsers.
+
+// Installing Development JavaScript Packages:
+// When a -D flag is used to install a JavaScript package using the command line, this adds the package under the property called devDependencies in a package.json file for the project. Whenever the developer runs npm install, all the listed packages and their dependencies will be installed.
+
+// ES6 JavaScript backwards compatibility:
+// ES6 is a version of JavaScript that was released in 2015 and is backward compatible. One example of how to do this is the JavaScript Babel library which transpiles ES6 JavaScript to ES5. Transpilation is the process of converting one programming language to another.
+
+// Babel configuration file:
+// Babel uses the .babelrc file as a configuration file to determine the JavaScript file’s presets, plugins and more. It can be created with the command touch .babelrc.
+
+// Babel build process:
+// Babel uses the npm run build command to covert all the JavaScript ES6 files in the src folder of the project to ES5. This conversion makes the JavaScript code compatible on all modern browsers. The ES5 code is written in a new file named main.js within the folder called lib
+
+// Installing JavaScript Packages:
+// The npm install command installs JavaScript packages to the project directory. It creates a folder called node_modules and copies the JavaScript package files to it. This command also installs all the dependencies for the given package.
+
+// Caniuse.com for checking browser support:
+// The website caniuse.com is useful for looking up the percent of browsers that support certain features in HTML, CSS, JavaScript, and their libraries.
+// For instance, you can find out what percent of browsers support specific features in ES6.
+
+// Reasons to update JavaScript:
+// Ecma international updated JavaScript from ES5 to ES6 in 2015 to make JavaScript syntax more similar to other languages, make JavaScript syntax more efficient and easier to read, and address ES5 bugs.
+
+// Node Package Manager:
+// The node package manager, or npm, is a package manager for JavaScript which is used to access and manage Node packages - modules that contain JavaScript code written by other developers that are meant to provide helpful tools, reduce duplication of work, and reduce bugs.
+
+// Initiate JavaScript project:
+// The command line instruction npm init is used to set up a new JavaScript project. A package.json file is created by the npm init command and contains a list of key-value pairs that provides information about the JavaScript project, such as the project name, version, description, a list of node packages required for the project, command line scripts, and more.
+
+// CHAPTER 14: STRICT MODE:
 
 // Strict mode:
 // JavaScript in strict mode does not allow variables to be used if they are not declared.
@@ -2504,45 +2614,3 @@ myFunction();
 // These are: implements, interface, let, package, private, protected, public, static, yield
 "use strict";
 let public = 1500;      // This will cause an error
-
-
-
-// CHAPTER 13: BROWSER COMPATIBILITY AND TRANSPILATION:
-
-// Running scripts with npm:
-// Command line shortcuts can be defined in a package.json file in a “scripts” object. This is used to combine multiple command line instructions in one command. These shortcuts can be executed from the terminal with the npm run command. For example, a script command named "build" can be executed with npm run build.
-
-// Babel Package Installation:
-// The babel-cli JavaScript package contains Babel command line tools. The babel-preset-env JavaScript package is used to transpile ES6 JavaScript code to ES5. They should be installed with the flag -D in the command line instruction like npm install -D babel-preset-env to be installed as development dependency.
-
-// ES5 & ES6 Compatibility:
-// ECMAScript (ES) is a scripting language specification standardized by Ecma International for Javascript. ES5 is the older JavaScript version which is supported by all web browsers while the ES6 version, released in 2015, is not supported by all web browsers.
-
-// Installing Development JavaScript Packages:
-// When a -D flag is used to install a JavaScript package using the command line, this adds the package under the property called devDependencies in a package.json file for the project. Whenever the developer runs npm install, all the listed packages and their dependencies will be installed.
-
-// ES6 JavaScript backwards compatibility:
-// ES6 is a version of JavaScript that was released in 2015 and is backward compatible. One example of how to do this is the JavaScript Babel library which transpiles ES6 JavaScript to ES5. Transpilation is the process of converting one programming language to another.
-
-// Babel configuration file:
-// Babel uses the .babelrc file as a configuration file to determine the JavaScript file’s presets, plugins and more. It can be created with the command touch .babelrc.
-
-// Babel build process:
-// Babel uses the npm run build commend to covert all the JavaScript ES6 files in the src folder of the project to ES5. This conversion makes the JavaScript code compatible on all modern browsers. The ES5 code is written in a new file named main.js within the folder called lib
-
-// Installing JavaScript Packages:
-// The npm install command installs JavaScript packages to the project directory. It creates a folder called node_modules and copies the JavaScript package files to it. This command also installs all the dependencies for the given package.
-
-// Caniuse.com for checking browser support:
-// The website caniuse.com is useful for looking up the percent of browsers that support certain features in HTML, CSS, JavaScript, and their libraries.
-// For instance, you can find out what percent of browsers support specific features in ES6, as covered in the “Browser compatibility and transpilition” lesson.
-
-// Reasons to update JavaScript:
-// Ecma international updated JavaScript from ES5 to ES6 in 2015 to make JavaScript syntax more similar to other languages, make JavaScript syntax more efficient and easier to read, and address ES5 bugs.
-
-// Node Package Manager:
-// The node package manager, or npm, is a package manager for JavaScript which is used to access and manage Node packages - modules that contain JavaScript code written by other developers that are meant to provide helpful tools, reduce duplication of work, and reduce bugs.
-
-// Initiate JavaScript project:
-// The command line instruction npm init is used to set up a new JavaScript project. A package.json file is created by the npm init command and contains a list of key-value pairs that provides information about the JavaScript project, such as the project name, version, description, a list of node packages required for the project, command line scripts, and more.
-

@@ -1679,11 +1679,11 @@ console.log(name, openingHours, categories);
 const {name: restaurantName, openingHours: hours, categories: tags} = newRestaurant;
 console.log(restaurantName, hours, tags);
 
-// Default vlaues: You can also create a default value if the property does not exist or even if it exists using = []
-const {menu = [], starterMenu: starters = []} = newRestaurant;
+// Default values: You can also create a default value if the property does not exist or even if it exists using = []
+const {menu = [], starterMenu: sta rters = []} = newRestaurant;
 console.log(menu, starters); // [] ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad']
 
-// Mutating variables whie destructuring objects:
+// Mutating variables while destructuring objects:
 let a = 111;
 let b = 999;
 const obj = {a:23, b:7, c:14}
@@ -1698,7 +1698,7 @@ const obj = {a:23, b:7, c:14}
 ({a, b} = obj);
 console.log(a, b); // 23, 7
 
-// Nested Objects
+// Destructuring Nested Objects
 const {fri: {open, close}} = openingHours;
 console.log(open, close); // 11, 23
 // const {fri: {open: o, close: c}} = openingHours; // You can rename open and close if needed
@@ -1713,8 +1713,11 @@ const arr = [7, 8, 9];
 const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
 console.log(badNewArr); // [1, 2, 7, 8, 9]
 
-const newArr = [1, 2, arr];
-const newArr = [1, 2, ...arr];
+const newArr1 = [1, 2, arr]; 
+console.log(newArr1); // [1,2,[7,8,9]]
+
+// Using the spread operator
+const newArr = [1, 2, ...arr]; 
 console.log(newArr); // [1, 2, 7, 8, 9]
 console.log(...newArr); // 1, 2, 7, 8, 9
 
@@ -1728,22 +1731,82 @@ console.log(newMenu); // ['Pizza', 'Pasta', 'Risotto', 'Gnocci']
 // Copy Array
 const mainMenuCopy = [...newRestaurant.mainMenu];
 
-// Join 2 Arrays
+// Merge 2 Arrays
 const menu = [...newRestaurant.starterMenu, ...newRestaurant.mainMenu];
 console.log(menu);
 
-// FOR-OF-LOOP
+// FOR...OF LOOP:
+// The for...of statement creates a loop iterating over iterable objects, including: built-in String, Array, array-like objects (e.g., arguments or NodeList), TypedArray, Map, Set, and user-defined iterables. 
+// It invokes a custom iteration hook with statements to be executed for the value of each distinct property of the object. 
+
+// For...of loop (Iterating over an Array)
+const iterable1 = [10, 20, 30];
+
+for (const value1 of iterable1) {
+  console.log(value1);
+}
+// 10
+// 20
+// 30
+
+// For...of loop (Iterating over a String)
+const iterable2 = 'boo';
+
+for (const value2 of iterable2) {
+  console.log(value2);
+}
+// "b"
+// "o"
+// "o"
+
+// For...of loop (Iterating over a Map)
+const iterable3 = new Map([['a', 1], ['b', 2], ['c', 3]]);
+
+for (const entry of iterable3) {
+  console.log(entry);
+}
+// ['a', 1]
+// ['b', 2]
+// ['c', 3]
+
+for (const [key, value3] of iterable3) {
+  console.log(value3);
+}
+// 1
+// 2
+// 3
+
 for (const item of menu) 
 console.log(item);
 
+// OUTPUT:
+// Focaccia
+// Bruschetta
+// Garlic Bread
+// Caprese Salad
+// Pizza
+// Pasta
+// Risotto
+
+
+// The entries() method returns a new Array Iterator object that contains the key/value pairs for each index in the array.
 for (const item of menu.entries()){
   console.log(item);
 }
+// OUTPUT:
+// [ 0, 'Focaccia']
+// [ 1, 'Bruschetta']
+// [ 2, 'Garlic Bread']
+// [ 3, 'Caprese Salad']
+// [ 4, 'Pizza']
+// [ 5, 'Pasta']
+// [ 6, 'Risotto']
+
 // console.log([...menu.entries()]);
 
 // Spread operators work on all iterables. Iterables are arrays, strings, maps or sets but NOT objects.
 const str = 'Val';
-console.log(...str); // ['V', 'a', 'l']
+console.log(...str); // V a l 
 const letters = [...str, ' ', 'S. ']
 console.log(letters); // ['V', 'a', 'l', '', 'S.']
 console.log(`${...str} Silva`); // Uncaught SyntaxError: Unexpected token '...' Cannot use ... here.
@@ -1759,7 +1822,7 @@ console.log(`${...str} Silva`); // Uncaught SyntaxError: Unexpected token '...' 
 const newRestaurant1 = {founded: 1998, ...newRestaurant, founder: 'Guiseppe'}
 console.log(newRestaurant1);
 
-const restaurantCopy = {...newrestaurant};
+const restaurantCopy = {...newRestaurant};
 restaurantCopy.name = 'Ristorante Roma';
 console.log(restaurantCopy.name); // Ristorante Roma
 console.log(newRestuarant.name); // Classico Italiano
@@ -1800,7 +1863,7 @@ add(2, 3); // [2, 3]
 add(5, 3, 7, 2); // [5, 3, 7, 2]
 
 const x  = [23, 5, 7];
-add(...x);
+add(...x); //35
 
 //Real world example
 newRestaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
@@ -1817,7 +1880,7 @@ newRestaurant.orderPizza('mushrooms');
 // SHORTCIRCUITING && and ||
 
 console.log('--- OR ---');
-// Use ANY data type, return ANY data type and they do short-circuiting ( if 1st operand returns true it returns truthy value)
+// Use ANY data type, return ANY data type and they do short-circuiting ( if 1st operand returns true it returns TRUTHY value)
 // We can use the OR operator to set default values 
 console.log(3 || 'Val'); // 3
 console.log('' || 'Val'); // Val
@@ -1833,7 +1896,7 @@ console.log(guests2);  // 23
 
 console.log('--- AND ---');
 // We can use the AND operator to execute code in the 2nd operand if the 1st one is true.
-// The && shortcircuits when the 1st value it comes across is falsy and immediately returns the falsy value without evaluating the next operand.
+// The && shortcircuits when the 1st value it comes across is FALSY and immediately returns the FALSY value without evaluating the next operand.
 console.log(0 && 'Val'); // 0
 console.log(6 && 'Val'); // Val
 console.log('Hello' && 23 && null && 'Val'); // null
@@ -1846,6 +1909,17 @@ if(newRestaurant.orderPizza){
 newRestaurant.orderPizza && newRestaurant.orderPizza('mushrooms', 'spinach');
 
 // NULLISH COALESCING OPERATOR ??
+// The nullish coalescing operator (??) is a logical operator that returns its right-hand side operand when its left-hand side operand is null or undefined, and otherwise returns its left-hand side operand.
+// This can be contrasted with the logical OR (||) operator, which returns the right-hand side operand if the left operand is any falsy value, not only null or undefined. 
+// In other words, if you use || to provide some default value to another variable foo, you may encounter unexpected behaviors if you consider some falsy values as usable (e.g., '' or 0).
+
+// Nullish coalescing operator examples
+const foo = null ?? 'default string';
+console.log(foo); // output: "default string"
+
+const baz = 0 ?? 42;
+console.log(baz); // output: 0
+
 newRestaurant.numGuests = 0;
 const guests3 = newRestaurant.numGuests || 10; 
 console.log(guests3);  // 10 (this is a bug)
@@ -1853,6 +1927,9 @@ console.log(guests3);  // 10 (this is a bug)
 // Nullish: null and undefined (NOT 0 or '')
 const guestCorrect = newRestaurant.numGuests ?? 10;
 console.log(guestCorrect); // 0
+
+
+
 
 // Looping Arrays: For Loop
 const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];

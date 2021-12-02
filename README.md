@@ -1,5 +1,6 @@
 # JavaScript Quick Reference Cheatsheet
 ## Introduction:
+* Strict mode 
 * Comments
 * Console.log()
 * String Concatenation and String Interpolation
@@ -48,11 +49,17 @@
 * Index
 * Property .length
 * Method .push()
+* Method .unshift()
 * Method .pop()
+* Method .shift()
+* Method .indexOf()
+* ES6 Method .includes()
+* Method .concat()
 
 ## Loops:
 * For Loop
-* Looping Through Arrays with Property .length
+* Looping Through Arrays with Property .length (Reverse Loop / Looping Backwards)
+* Looping, Breaking and Continuing Through Arrays
 * Nested For Loop
 * While Loop
 * Do…While Statement
@@ -85,6 +92,14 @@
 * Javascript factory functions
 * JavaScript destructuring assignment shorthand syntax
 * shorthand property name syntax for object creation
+* Destructuring Arrays
+* Destructuring Objects
+* Spread Operator ...
+* For...Of Loop (Iterating over an Array, String, Map)
+* REST Patterns And Parameters
+* Destructuring in REST
+* Shortcircuiting && and ||
+* Nullish Coalescing Operator ??
 
 ## Classes:
 * new keyword
@@ -94,7 +109,7 @@
 * extends
 
 ## Promises:
-* States of a JavaScript Promise (pending, resolved, rejected)
+* States of a JavaScript Promise (pending, fulfilled (resolved), rejected)
 * .catch() method for handling rejection / error handling
 * JavaScript Promise.all() method
 * Executor function of JavaScript Promise object
@@ -110,10 +125,9 @@
 * Async Await Promises
 * Using async await syntax
 * JavaScript async…await advantage
-
-## Strict Mode:
-* Examples
-* Note allowed in Strict mode
+* Async Function Error Handling using try..catch
+* JSON.parse() method
+* JavaScript aysnc await operator
 
 ## Requests:
 * HTTP GET request
@@ -123,11 +137,30 @@
 * XMLHttpRequest GET Request Requirements
 * HTTP POST request
 * HTTP POST request with the XMLHttpRequest API
+* JSON.stringify() method
 * Promise URL parameter FETCH API
 * ok property FETCH API
 * Fetch API Function
 * JSON Formatted response body
 * async await syntax
+
+## Browser Compatibility and Transpilation:
+* Running scripts with npm
+* Babel Package Installation
+* ES5 & ES6 Compatibility
+* Installing Development JavaScript Packages
+* ES6 JavaScript backwards compatibility
+* Babel configuration file
+* Babel build process
+* Installing JavaScript Packages
+* Caniuse.com for checking browser support
+* Reasons to update JavaScript
+* Node Package Manager
+* Initiate JavaScript project
+
+## Strict Mode:
+* Examples
+* Note allowed in Strict mode
 
 # Modern JavaScript Sandbox
 
@@ -166,7 +199,7 @@ Building projects with vanilla JavaScript. (No frameworks or libraries used)
 ### Topics Covered:
 
   - Basics & Fundamentals: Data types, let & const variables, functions, conditionals, loops, object literals, arrays, etc
-  - DOM Manipulation: Selectors, traversing the DOM, show/hide, creating & removing elements, event listeners
+  - DOM Manipulation: DOM Selectors, traversing the DOM, show/hide, creating & removing elements, event listeners
   - OOP: ES5 prototypes, inheritance, ES2015 classes & sub-classes, constructors
   - Async JS: Ajax & XHR, Fetch API, callbacks, promises, async / await
   - ES2015+: Arrow functions, template strings, generators, iterators, maps & sets, symbols & more

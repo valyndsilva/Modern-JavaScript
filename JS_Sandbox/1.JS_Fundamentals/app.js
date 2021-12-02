@@ -537,7 +537,8 @@ function myFunction() {
 // Code here can't use pizzaName
 
 // Block Scoped Variables:
-// const and let are block scoped variables, meaning they are only accessible in their block or nested blocks. In the given code block, trying to print the statusMessage using the console.log() method will result in a ReferenceError. It is accessible only inside that if block.
+// const and let are block scoped variables, meaning they are only accessible in their block or nested blocks. 
+// In the given code block, trying to print the statusMessage using the console.log() method will result in a ReferenceError. It is accessible only inside that if block.
 
 const isLoggedIn = true;
  
@@ -903,6 +904,10 @@ console.log(val5);
 val5 = Array.isArray(numbers1);
 console.log(numbers1);
 console.log(val5);
+Array.isArray([1, 2, 3]);  // true
+Array.isArray({foo: 123}); // false
+Array.isArray('foobar');   // false
+Array.isArray(undefined);  // false
 
 // Get single value
 val5 = numbers1[3];

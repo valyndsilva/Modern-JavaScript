@@ -111,7 +111,7 @@
 // console.log(lis[1]);
 // lis[3].style.color = 'green';
 // lis[0].textContent = 'Hello Lis';
-// //Convert html collection to an Array
+// //Convert html collection to an Array using Array.from()
 // lis = Array.from(lis);
 // lis.reverse();
 // // lis.forEach(function(li) {
@@ -497,7 +497,7 @@
 //   //     console.log('delete item');
 //   //   }
 //   // Targeting the remove link tag: (Recommended way)
-//   // Here the className requires you to enter all the class names assigned to the element.
+//   // Here the className requires you to enter all the class names assig ned to the element.
 //   //   if (e.target.parentElement.className === 'delete-item secondary-content') {
 //   //     console.log('delete item');
 //   //   }

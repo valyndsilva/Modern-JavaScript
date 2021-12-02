@@ -263,6 +263,7 @@ x++; // x = x + 1
 x--; // x = x - 1
 console.log(x);
 
+
 // Logical Operator ||
 // The logical OR operator || checks two values and returns a boolean. If one or both values are truthy, it returns true. If both values are falsy, it returns false.
 true || false;        // true
@@ -308,6 +309,41 @@ if(hasDriversLicense && hasGoodVision && !isTired){
 } else{
   console.log('Someone else should drive...'); 
 }
+
+
+// Logical Assignment Operators
+const rest1 = {
+  name: 'Capri',
+  numGuests: 0,
+};
+
+const rest2 = {
+  name: 'La Piazza',
+  owner: 'Giovanni Rossi',
+};
+
+// Logical || OR Assignment Operator
+// rest1.numGuests = rest2.numGuests || 10; 
+// rest2.numGuests = rest2.numGuests || 10; // Works due to shortcircuiting (if 1st value is turthy the 1st value will be returned and 2nd value will not even be looked)
+
+rest1.numGuests ||= 10; // rest1.numGuests is falsy as the value 0 is falsy so numGuests returns 10
+rest2.numGuests ||= 10; // rest2.numGuests is falsy as it is undefined so numGuests returns 10
+
+// Logical ?? Nullish Assignment Operator (null or undefined)
+rest1.numGuests ??= 10; // rest1.numGuests is truthy so numGuests returns 0
+rest2.numGuests ??= 10;// rest2.numGuests is falsy as it is undefined so numGuests returns 10
+
+
+// Logical && AND Assignment Operator
+// rest1.owner = rest1.owner && '<Anonymous>'; //owner is set to undefined
+// rest2.owner = rest2.owner && '<Anonymous>'; // owner is set to <Anonymous>. Works due to shortcircuiting (if 1st value is falsy the 1st value will be returned and 2nd value will not even be looked. Here 1st value is truthy so 2nd value is returned.)
+rest1.owner &&= '<Anonymous>';
+rest2.owner &&= '<Anonymous>';
+
+console.log(rest1);
+console.log(rest2);
+
+
 
 // Ternary Operator ? :
 // It accepts a condition followed by a ? operator, and then two expressions separated by a :. If the condition evaluates to truthy, the first expression is executed, otherwise, the second expression is executed.
@@ -1085,8 +1121,25 @@ const sum = arrayOfNumbers.reduce((accumulator, currentValue) => {
 });
 console.log(sum); // 10
 
+// The reduce() method executes a user-supplied “reducer” callback function on each element of the array, in order, passing in the return value from the calculation on the preceding element. 
+// The final result of running the reducer across all elements of the array is a single value.
+// The first time that the callback is run there is no "return value of the previous calculation". If supplied, an initial value may be used in its place. 
+// Otherwise array element 0 is used as the initial value and iteration starts from the next element (index 1 instead of index 0).
+
+const array1 = [1, 2, 3, 4];
+const reducer = (previousValue, currentValue) => previousValue + currentValue;
+
+// 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer));
+// expected output: 10
+
+// 5 + 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer, 5));
+// expected output: 15
+
+
 // Array Method .forEach():
-// The .forEach() method executes a callback function on each of the elements in an array in order.
+// The .forEach() method executes a callback function once for each array element in order.
 // Here, in the example below the callback function containing a console.log() method will be executed 5 times, once for each element.
 const numbers = [28, 77, 45, 99, 27];
  
@@ -1216,6 +1269,37 @@ const classOf2018 = {
   students: 38,
   year: 2018
 }
+
+// Enhanced Object Literals:
+const hours = {
+  mon: {
+    open: 12,
+    close: 22,
+  },
+  tues: {
+    open: 12,
+    close: 22,
+  },
+  wed: {
+    open: 12,
+    close: 22,
+  },
+};
+
+const classOf2021 = {
+  students: 38,
+  year: 2018,
+  hours, //  here the hours object is converted into a property and included in classof2021 object
+  test1: function(a,b){ 
+    return (a+b);
+  },
+  // With Enchanched Object Literals we can write methods better. 
+  test2(c,d){ // In ES6 we no longer need to create a property and set it to a function expression. We don't need to use the function keyword and :
+    return (c+d);
+  },
+}
+
+console.log(classOf2021);
 
 // Delete operator:
 // Once an object is created in JavaScript, it is possible to remove properties from the object using the delete operator. The delete keyword deletes both the value of the property and the property itself from the object. The delete operator only works on properties, not on variables or functions.

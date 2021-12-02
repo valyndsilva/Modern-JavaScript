@@ -15,6 +15,10 @@
 * Logical Operator ||
 * Logical Operator &&
 * Logical Operator !
+* Logical Assignment Operators 
+* Logical OR Assignment Operator ||= 
+* Logical Nullish Assignment Operator ??=
+* Logical AND Assignment Operator &&=
 * Ternary Operator ? :
 * Comparison Operators (>, <, >=, <=)
 * Equality Operators: == vs === 
@@ -81,6 +85,7 @@
 * JavaScript Objects are Mutable
 * JavaScript for...in loop
 * Properties and values of a JavaScript object
+* Enhanced Object Literals
 * Delete operator
 * Javascript passing objects as arguments
 * JavaScript Object Methods
@@ -143,6 +148,20 @@
 * Fetch API Function
 * JSON Formatted response body
 * async await syntax
+
+## Browser Compatibility and Transpilation:
+* Running scripts with npm
+* Babel Package Installation
+* ES5 & ES6 Compatibility
+* Installing Development JavaScript Packages
+* ES6 JavaScript backwards compatibility
+* Babel configuration file
+* Babel build process
+* Installing JavaScript Packages
+* Caniuse.com for checking browser support
+* Reasons to update JavaScript
+* Node Package Manager
+* Initiate JavaScript project
 
 ## Strict Mode:
 * Examples

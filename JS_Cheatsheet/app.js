@@ -224,12 +224,177 @@ console.log('After marriage:' , jessicaCopy); // Jessica Davis 27 ['Alice', 'Bob
 // Primitive types are stored in the Call Stack while Reference Types are stored in the Heap.
 // Values declared with const are only mutable with reference type value. They are immutable with primitive type values.
 
+// WORKING WITH STRINGS:
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+console.log(plane[0]); // A
+console.log(plane[1]); // 3  string type
+console.log(plane[2]); // 2  string type
+console.log('B737'[0]); // B  
 
-// String .length:
-// The .length property of a string returns the number of characters that make up the string.
-let message = 'good nite';
-console.log(message.length); // Prints: 9
-console.log('howdy'.length); // Prints: 5
+// // The .length property of a string returns the number of characters that make up the string.
+console.log(airline.length); // 16 
+console.log('B737'.length); // 4
+
+// .indexOf()
+console.log(airline.indexOf('r')); // 6
+// .lastIndexOf()
+console.log(airline.lastIndexOf('r')); // 10
+console.log(airline.indexOf('Portugal')) // 8
+console.log(airline.indexOf('portugal')) // -1 it is case sensitive and returns -1 if it cannot be found.
+
+// .slice() 
+// .slice(x) where x is the position at which the extraction starts - begin parameter
+console.log(airline.slice(4)); // Air Portugal  
+// .slice(x) where x is the position where extraction starts and y is the position before which extraction stops.
+console.log(aline.slice(4,7)) // Air
+console.log(airline.slice(0, airline.indexOf(' '))); // TAP
+console.log(airline.slice(airline.lastIndexOf(' ') + 1)); // Portugal we add 1 to remove the space before Portugal
+console.log(airline.slice(-2)); // al
+console.log(airline.slice(1, -1)) // AP Air Portuga
+
+// Ex:
+const checkMiddleSeat = function(seat) {
+  // B and E are middle seats
+  const s = seat.slice(-1);
+  if(s === 'B' || s === 'E')
+  console.log('You got the middle seat!')
+  else console.log(('You got lucky!'));
+};
+
+checkMiddleSeat('11B'); // You got the middle seat!
+checkMiddleSeat('23C'); // You got lucky!
+checkMiddleSeat('3E'); // You got the middle seat!
+
+// String are primitive types. So why do they have methods??
+// When we call a method on a string JS converts the string primitive to a string object with the same content behind the scenes.
+// And it's on that string object where the methods are called. This process is called 'boxing' as it puts the string in a box which is an object.
+console.log(new String('valyn')); // String {"valyn"} Here it converts String to Object when we call a method on a string.
+console.log(typeof new String('valyn')); // Object
+// All string methods return primitives even if called on a string object.
+console.log(typeof new String('valyn').slice(1)); // String
+
+// .toLowerCase()
+console.log(airline.toLowerCase()); // tap air portugal
+
+// .toUpperCase()
+console.log(airline.toUpperCase()); // TAP AIR PORTUGAL
+
+// Fix capitalization in name Ex:
+const passenger = 'jOnAS';
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect); // Jonas
+
+// Comparing user input email
+const email = 'hello@valyn.io';
+const loginEmail = '  Hello@Valyn.Io \n';
+
+// Step 1: Convert to lowercase
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim(); // removes white space
+// console.log(trimmedEmail);
+const normalizedEmail = loginEmail.toLowerCase().trim(); // hello@valyn.io
+console.log(normalizedEmail)
+console.log(email === normalizedEmail); // true
+
+// .replace()
+// replace method is case sensitive
+// In europe we use , to separate the decimal and in US we use .
+const priceGB = '288,97£';
+const priceUS = priceGB.replace('£', '$').replace(',', '.');
+console.log(priceUS); // 288.97$
+
+const announcement = 'All passengers come to boarding door 23. Boarding door 23!';
+console.log(announcement.replace('door', 'gate')); // Replaces only the 1st occurrence
+console.log(announcement.replaceAll('door', 'gate')); // Replaces all occurences
+
+// Another solution to replace all occurences is to use regular expressions:
+// write string between / / instead of ' '. g is global
+console.log(announcement.replace(/door/g, 'gate'));
+
+// Boolean Methods 
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320')); // true
+console.log(plane.includes('Boeing')); // false
+console.log(plane.startsWith('Airb')); // true
+
+if(plane.startsWith('Airbus') && plane.endsWith('neo')){
+  console.log('Part of the NEW Airbus family')
+}
+
+// Practice Ex:
+const checkBaggage = function(items){
+  // const baggage = items;
+  const baggage = items.toLowerCase();
+  if(baggage.includes('knife') || baggage.includes('gun')){
+    console.log('You are NOT allowed on board');
+  } else {
+    console.log('Welcome aboard!')
+  }
+}
+checkBaggage('I have a laptop, some Food and a pocket Knife'); // You are NOT allowed on board
+checkBaggage('Socks and camera'); // Welcome aboard!
+checkBaggage('Got some snacks and a gun for protection'); // You are NOT allowed on board
+
+
+// .split()
+// It allows us to split a string into multiple parts based on a divider string.
+console.log('a+very+nice+string'.split('+')); // ["a", "very", "nice", "string"]
+console.log('Val Mar',split(' ')); // ["Val", "Mar"];
+// Use destructuring to store
+const [firstName, lastName] = 'Val Mar'.split(' '); 
+
+// .join()
+// Make lastName uppercase and add Ms in the beginning
+const newName = ['Ms.', firstName, lastName.toUpperCase()].join(' ');
+console.log(newName); // Ms. Val MAR
+
+// Ex: Capitalization of Names
+const capitalizeName = function(name){
+const names = name.split(' ');
+const namesUpper = [];
+
+for(const n of names){
+  // n(0).toUpperCase() + n.slice(1);
+  namesUpper.push(n.replace(n[0], n[0].toUpperCase())); // alternate way ro achieve the same result 
+}
+console.log(namesUpper.join(' '));
+};
+capitalizeName('jessica ann smith davis'); // Jessica Ann Smith Davis
+capitalizeName('roger fernandes'); // Roger Fernandes
+
+// Padding
+const message = 'Go to gate 23'; 
+// .padStart()
+console.log(message.padStart(18, '+')); // +++++Go to gate 23
+// Total length of the string should be 18
+//.padEnd()
+console.log('James'.padEnd(10, '+')); // James+++++
+//
+console.log(message.padStart(18, '+').padEnd(23, '+')); // +++++Go to gate 23+++++
+
+// Ex: Masking a credit card number
+const makedCreditCard = function(number){
+  const str = number + '';
+  const last = str.slice(-4);
+  return last.padStart(str.length, '*');
+}
+
+makedCreditCard(012345678910123); // ***********0123
+makedCreditCard('012345678910123');  // ***********0123
+
+// Repeat method
+// repeat a string multiple times
+const message2 = 'Bad weather.. All Departures Delayed... '
+console.log(message2.repeat(5));
+
+const planesInLine = function(n){
+  console.log(`There are ${n} planes in line ${':('.repeat(n)}`)
+};
+planesInLine(5);
+planesInLine(3);
+planesInLine(12);
 
 // OPERATORS:
 
@@ -2083,7 +2248,7 @@ rest3.set(arr, 'Test');
 rest3.set(document.querySelector('h1'), 'Heading');
 console.log(rest3.get(arr)); // returns Test. It refers to the same place in memory.
 
-// Createa new map without using a set() method (Recommended method). 
+// Create a new map without using a set() method (Recommended method). 
 const question = new Map([
   ['question', 'What is the best programming language in the world?'],
   ['1', 'C'],
@@ -2100,13 +2265,12 @@ console.log(Object.entries(openingHours))
 const hoursMap = new Map(Object.entries(openingHours));
 console.log(hoursMap);
 
-// Quizz App
+// Quiz App
 console.log(question.get('question'));
 for (const [key,value] of question) {
   // Print the key if its a number type
   if(typeof key === 'number') console.log(`Answer ${key}: ${value}`);
 }
-
 // const answer = Number(prompt('Your answer'));
 const answer = 3; // replace prompt with default value to avoid prompt popping up 
 console.log(answer);
@@ -2120,6 +2284,53 @@ console.log([...question]);
 console.log([...question.entries()]);
 console.log([...question.keys()]);
 console.log([...question.values()]);
+
+// What Kind Of Data Structure To Use:
+//Sources Of Data:
+// 1. From the program itself: Data written directly in the source code( Eg: status messages)
+// 2. From the UI: Data input from the usr or data witten in the DOM (Ex: tasks in a todo app)
+// 3. From external sources: Data fetched from Web API (Ex: Recipe objects)
+// Collection of data -> Data structure: 4 types ->
+// if we need a Simple list (Use Arrays or Sets) OR if we need Key/Value Pairs (Use Objects or Maps)
+// Keys allow to describe values
+// Other Built-In Data Structures: WeakMap and Weak Set
+// Other Non Built-In Data Structures: Stacks, Queues, Linked Lists, Trees, Hash Tables
+
+// Arrays Vs Sets And Objects VS Maps
+
+// Arrays:
+tasks = ['Code', 'Eat', 'Code']; //["Code", "Eat", "Code"]
+// Use when you need ordered list of values (might contain duplicates)
+// Use when you need to manipulate data
+
+// Sets
+tasks = new Set(['Code', 'Eat', 'Code']); // {"Code", "Eat"}
+// Use when you need to work with unique values
+// USe when high-performance is really important
+// Use to remove duplicates from arrays
+
+// Objects
+task = {
+  task: 'Code',
+  date: 'today',
+  reapeat: true
+};
+// More "traditional" key/value store ("abused" objects)
+// Easier to write and access values with . and [] notation
+// Use when you need to include functions(methods) as values. You can use the 'this' keyword to access properties of the same object methods which is impossible in Maps.
+// Use when working with JSON (can convert to Map)
+
+// Maps
+task = new Map([
+  ['task','Code'],
+  ['date', 'today'],
+  [false, 'Start coding!']
+]);
+//Better performance
+// Keys can have any data type
+// Easy to iterate and Easy to compute size
+// Use when you simply need to map keys to values
+// Use when you need keys that are not strings
 
 // REST PATTERN AND PARAMETERS
 // Similar syntax as spread operator. But Rest Pattern is used to collect multiple elements and condense / pack them into an array.

@@ -811,8 +811,8 @@ for(const [minute, event] of gameEvents) {
 }
 
 
-// Coding Challenge #4
-// Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+// Coding Challenge #4 (Working with Strings)
+// 1.Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
 // The input will come from a textarea inserted into the DOM (see code below to insert the elements), and conversion will happen when the button is pressed.
 // Test data (pasted to textarea, including spaces):
 // underscore_case
@@ -820,11 +820,13 @@ for(const [minute, event] of gameEvents) {
 // Some_Variable
 //   calculate_AGE
 // delayed_departure
-// Should produce this output (5 separate console.log outputs): underscoreCase ✅
-// firstName ✅
-// someVariable ✅
-// calculateAge ✅
-// delayedDeparture ✅
+
+// 2.Should produce this output (5 separate console.log outputs): 
+// underscoreCase      ✅
+// firstName           ✅✅
+// someVariable        ✅✅✅
+// calculateAge        ✅✅✅✅
+// delayedDeparture    ✅✅✅✅✅
 // Hints:
 // § Remember which character defines a new line in the textarea 😉
 // § The solution only needs to work for a variable made out of 2 words, like a_b
@@ -834,8 +836,33 @@ for(const [minute, event] of gameEvents) {
 // you're stuck. Then pause and continue!
 // Afterwards, test with your own test data!
 
+// 1.
 document.body.append(document.createElement('textarea')); 
 document.body.append(document.createElement('button'));
+
+document.querySelector('button').addEventListener('click', function(){
+  const text = document.querySelector('textarea').value;
+  console.log(text);
+  const rows = text.split('\n');
+  console.log(rows);
+  for(const [i, row] of rows.entries()){
+    const [first, second] = row.toLowerCase().trim().split('_');
+    // console.log(row, first, second); // underscore_case  underscore  case
+    const output = `${first}${second.replace(second[0], second[0].toUpperCase())}`
+    console.log(output);
+
+    //2. 
+    // console.log(output.padEnd(20, ' ')); // to add empty spaces you can ignore the empty argument
+    // console.log(output.padEnd(20));
+    console.log(`${output.padEnd(20)}✅ ${'✅'.repeat(i+1)}`);
+  }
+})
+// underscore_case -> underscoreCase
+//  first_name -> firstName
+// Some_Variable -> someVariable 
+//   calculate_AGE -> calculateAge
+// delayed_departure -> delayedDeparture
+
 
 
 // A Closer Look at Functions:

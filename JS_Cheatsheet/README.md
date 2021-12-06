@@ -7,7 +7,22 @@
 * Template Literals
 * Values (Reference or Primitive Data Types) 
 * Variables (var, let and const)
-* String .length
+
+## Working with Strings:
+* .length
+* .indexOf()
+* .lastIndexOf()
+* .slice() 
+* .toLowerCase()
+* .toUpperCase()
+* .trim()
+* .replace()
+* .replaceAll()
+* Boolean Methods: .includes(), .startsWith(), .endsWith()
+* .split()
+* .join()
+* Padding: .padStart() and .padEnd()
+* .repeat()
 
 ## Operators:
 * Arithmetic Operators
@@ -79,7 +94,7 @@
 * Array Method .filter()
 * Array Method .map()
 
-## Data Structures, Modern Operators and Strings:
+## Data Structures and Modern Operators:
 * Restrictions in Naming Properties
 * Dot Notation for Accessing Object Properties
 * Accessing non-existent JavaScript properties

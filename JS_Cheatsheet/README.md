@@ -104,7 +104,13 @@
 * For...Of Loop (Iterating over an Array, String, Map)
 * Looping Objects: Object Keys, Values and Entries
 * Sets
-* Conversion of Set to Array using Spread operator ...
+* Conversion of a Set to Array using Spread operator ...
+* Maps
+* Using Arrays or Objects as Maps Keys
+* Convert Object To Map
+* Convet Map to Object
+* Arrays Vs Sets And Objects VS Maps
+* Which Data Structures To Use?
 * REST Patterns And Parameters
 * Destructuring in REST
 * Shortcircuiting && and ||

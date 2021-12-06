@@ -312,6 +312,21 @@ if(hasDriversLicense && hasGoodVision && !isTired){
 
 
 // Logical Assignment Operators
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const  openingHours = { 
+  [weekdays[3]]:{ // To use a variable name as a property name use the [] bracket notation.
+  open: 12,
+  close: 12,
+  },
+  [weekdays[4]]:{
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]:{
+    open: 0, // open 24 hours
+    close: 24,
+  },
+  };
 const rest1 = {
   name: 'Capri',
   numGuests: 0,
@@ -324,7 +339,7 @@ const rest2 = {
 
 // Logical || OR Assignment Operator
 // rest1.numGuests = rest2.numGuests || 10; 
-// rest2.numGuests = rest2.numGuests || 10; // Works due to shortcircuiting (if 1st value is turthy the 1st value will be returned and 2nd value will not even be looked)
+// rest2.numGuests = rest2.numGuests || 10; // Works due to shortcircuiting ||  (if 1st value is turthy the 1st value will be returned and 2nd value will not even be looked)
 
 rest1.numGuests ||= 10; // rest1.numGuests is falsy as the value 0 is falsy so numGuests returns 10
 rest2.numGuests ||= 10; // rest2.numGuests is falsy as it is undefined so numGuests returns 10
@@ -336,14 +351,62 @@ rest2.numGuests ??= 10;// rest2.numGuests is falsy as it is undefined so numGues
 
 // Logical && AND Assignment Operator
 // rest1.owner = rest1.owner && '<Anonymous>'; //owner is set to undefined
-// rest2.owner = rest2.owner && '<Anonymous>'; // owner is set to <Anonymous>. Works due to shortcircuiting (if 1st value is falsy the 1st value will be returned and 2nd value will not even be looked. Here 1st value is truthy so 2nd value is returned.)
+// rest2.owner = rest2.owner && '<Anonymous>'; // owner is set to <Anonymous>. Works due to shortcircuiting && (if 1st value is falsy the 1st value will be returned and 2nd value will not even be looked. Here 1st value is truthy so 2nd value is returned.)
 rest1.owner &&= '<Anonymous>';
 rest2.owner &&= '<Anonymous>';
 
 console.log(rest1);
 console.log(rest2);
 
+// Optional Chaining ?.
 
+// The optional chaining operator (?.) enables you to read the value of a property located deep within a chain of connected objects without having to check that each reference in the chain is valid.
+// The ?. operator is like the . chaining operator, except that instead of causing an error if a reference is nullish (null or undefined), the expression short-circuits with a return value of undefined. 
+// When used with function calls, it returns undefined if the given function does not exist.
+// This results in shorter and simpler expressions when accessing chained properties when the possibility exists that a reference may be missing. It can also be helpful while exploring the content of an object when there's no known guarantee as to which properties are required.
+// Optional chaining cannot be used on a non-declared root object, but can be used with an undefined root object.
+const adventurer = {
+  name: 'Alice',
+  cat: {
+    name: 'Dinah'
+  }
+};
+
+const catName = adventurer.cat?.name; // only if the property cat before the ? exists then the name property will be read
+console.log(catName);
+// expected output: Dinah
+
+
+const dogName = adventurer.dog?.name; // only if the property dog before the ? exists then the name property will be read
+console.log(dogName);
+// expected output: undefined (it return undefined instead of giving an error)
+
+console.log(adventurer.someNonExistentMethod?.());
+// expected output: undefined
+
+// To use a variable name as a property name use the [] notation.
+const days =['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
+for(const day of days){
+  console.log(day);
+  rest1.openingHours[day]?.open || 'closed'; // Causes confusion on sat which exists but since it's value is 0 which is falsy it returns closed
+  rest1.openingHours[day]?.open ?? 'closed'; // Returns correct value for sat 0 (nullish coalescing operator and optional chaining ?.)
+  console.log(`On ${day}, we open at ${open}`)
+}
+
+//Optional chaining for calling methods (Check if method exists before we call it)
+console.log(adventurer.cat?.name ?? `Method does not exists`); // Dinah
+console.log(adventurer.dog?.name ?? `Method does not exists`); // Method does not exists
+console.log(adventurer.dog(name) ?? `Method does not exists`); // Uncaught TypeError: adventurer.dog is not a function
+
+//Optional chaining with Arrays (for checking if array exists)
+// consts users = [];
+// console.log(users[0]?.name ?? `User array empty`); // User array empty
+const users = [{name:'Val', email:'test@val.com'}]
+console.log(users[0]?.name ?? `User array empty`); // Val
+
+//If we had to do the same without optional chaining ?. 
+if(users.length > 0) console.log(users[0].name);
+else console.log('Users array empty');
 
 // Ternary Operator ? :
 // It accepts a condition followed by a ? operator, and then two expressions separated by a :. If the condition evaluates to truthy, the first expression is executed, otherwise, the second expression is executed.
@@ -1167,7 +1230,10 @@ const announcements = finalParticipants.map(member => {
  
 console.log(announcements);
 
+
+
 // CHAPTER 8: OBJECTS:
+
 // An object is a built-in data type for storing key-value pairs. Data inside objects are unordered, and the values can be of any type.
 
 // Restrictions in Naming Properties:
@@ -1624,6 +1690,7 @@ const dogFactory = (name, age, breed) => {
 };
 console.log('albert', 3, 'akhita');
 
+
 // JavaScript destructuring assignment shorthand syntax
 // The JavaScript destructuring assignment is a shorthand syntax that allows object properties to be extracted into specific variable values.
 // It uses a pair of curly braces ({}) with property names on the left-hand side of an assignment to extract values from objects. The number of variables can be less than the total properties of an object.
@@ -1764,7 +1831,7 @@ const {name: restaurantName, openingHours: hours, categories: tags} = newRestaur
 console.log(restaurantName, hours, tags);
 
 // Default values: You can also create a default value if the property does not exist or even if it exists using = []
-const {menu = [], starterMenu: sta rters = []} = newRestaurant;
+const {menu = [], starterMenu: starters = []} = newRestaurant;
 console.log(menu, starters); // [] ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad']
 
 // Mutating variables while destructuring objects:
@@ -1891,9 +1958,9 @@ for (const item of menu.entries()){
 // Spread operators work on all iterables. Iterables are arrays, strings, maps or sets but NOT objects.
 const str = 'Val';
 console.log(...str); // V a l 
-const letters = [...str, ' ', 'S. ']
+const letters = [...str, ' ', 'S. '];
 console.log(letters); // ['V', 'a', 'l', '', 'S.']
-console.log(`${...str} Silva`); // Uncaught SyntaxError: Unexpected token '...' Cannot use ... here.
+// console.log(`${...str} Silva`); // Uncaught SyntaxError: Unexpected token '...' Cannot use ... here.
 // multiple values separated by a comma are used when we pass arguments into a function or when we build a new array.
 
 // Real world example
@@ -1903,7 +1970,7 @@ console.log(`${...str} Silva`); // Uncaught SyntaxError: Unexpected token '...' 
 // newRestaurant.orderPasta(...ingredients); // Here is your delicious pasta with a, b and c
 
 // SPREAD operator in Objects
-const newRestaurant1 = {founded: 1998, ...newRestaurant, founder: 'Guiseppe'}
+const newRestaurant1 = {founded: 1998, ...newRestaurant, founder: 'Guiseppe'};
 console.log(newRestaurant1);
 
 const restaurantCopy = {...newRestaurant};
@@ -1911,6 +1978,148 @@ restaurantCopy.name = 'Ristorante Roma';
 console.log(restaurantCopy.name); // Ristorante Roma
 console.log(newRestuarant.name); // Classico Italiano
 
+
+// Looping Objects: Object Keys, Values and Entries
+//Property NAMES
+const properties = Object.keys(openingHours);
+console.log(properties);
+let openStr = `We are open on ${properties.length} days:`;
+for (const day of properties){
+  openStr += `${day},`;
+  }
+  console.log(openStr); // We are open on 3 days: thu, fri, sat
+
+  // Property VALUES
+const values = Object.values(openingHours);
+console.log(values);
+
+// Property ENTRIES (name and values)
+const entries = Object.entries(openingHours);
+console.log(entries); // returns an array of keys and values
+
+// for(const x of entries){
+//   // console.log(x) // prints each key and value
+//   console.log(`On ${key} we open at ${open} and close at ${close}`); // key is not defined
+// }
+
+// Destructuring x
+// [key, value]
+for(const [key, {open, close}] of entries){
+  // console.log(x) // prints each key and value
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+
+// SETS
+// Set is a collection of unique values and the order is irrelevant. Sets cannot have duplicates. They can hold mixed data types.
+const ordersSet = new Set(['Pasta', 'Pizza', 'Pizza', 'Risotto', 'Pasta', 'Pizza']);
+console.log(ordersSet); // Set(3) {'Pasta' 'Pizza', 'Risotto'}
+console.log(new Set('valyn')); // Set(5){'v', 'a', 'l', 'y', 'n'}
+console.log(new Set()); // Set(0){}
+console.log(ordersSet.size); // 3. size give the unique number of meals prepared
+console.log(ordersSet.has('Pizza')); //true
+console.log(ordersSet.has('Bread')); //false
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+console.log(ordersSet); // // Set(3) {'Pasta' 'Pizza', 'Risotto', 'Garlic Bread'}
+ordersSet.delete('Risotto');
+console.log(ordersSet); // // Set(3) {'Pasta' 'Pizza', 'Garlic Bread'}
+// ordersSet.clear();
+// Get values out of a Set
+console.log(ordersSet[1]); //undefined
+// Sets don't have indexes. There is no way to get data out of a Set.
+
+// Sets are iterables so we can loop over them
+for (const order of ordesSet) console.log(order)
+// Pasta
+// Pizza
+// Garlic Bread
+
+// Ex:
+const staff = ['waiter', 'chef', 'waiter', 'manager', 'chef', 'waiter'];
+const staffUnique = new Set(staff);
+console.log(staffUnique); // Set(3) {'waiter', 'chef', 'manager'}
+
+// Conversion of Set to Array using Spread operator ...
+const staffUnique1 = [... new Set(staff)];
+console.log(staffUnique1); // ['waiter', 'chef', 'manager']
+// console.log(new Set().size);
+console.log(new Set(['waiter', 'chef', 'waiter', 'manager', 'chef', 'waiter']).size); // 3
+console.log(new Set(staff).size); // 3
+
+console.log(new Set('valyndsilva').size);
+
+// MAPS
+const rest3 = new Map();
+rest3.set('name', 'Classico Italiano');
+rest3.set(1, 'Firenze, Italy');
+console.log(rest3.set(2, 'Lisbon, Portugal'));
+rest3.set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+.set('open', 11)
+.set('close', 23)
+.set(true, 'We are open :D')
+.set(false, 'We are closed :(');
+console.log(rest3.get('name')); // Classico Italiano
+console.log(rest3.get(true)); // We are open :D
+console.log(rest3.get(1)); // Firenze, Italy
+
+const time = 21;
+console.log(rest3.get(time > rest3.get('open') && time < rest3.get('close'))); // We are closed :(
+
+//Checking if a Map has a certain key
+console.log(rest3.has('categories')); //true
+rest3.delete(2);
+// rest3.clear();
+console.log(rest3);
+console.log(rest3.size); // 7
+rest3.clear();
+
+//Using Arrays or Objects as Maps Keys
+rest3.set([1,2], 'Test'); // key, value
+console.log(rest3);
+console.log(rest3.get([1,2])); // This will not return 'Test'. Returns undefined. The array written in the get() and set() are not the same object in the heap. 
+// To make it work you should use it as below:
+const arr = [1,2];
+rest3.set(arr, 'Test');
+rest3.set(document.querySelector('h1'), 'Heading');
+console.log(rest3.get(arr)); // returns Test. It refers to the same place in memory.
+
+// Createa new map without using a set() method (Recommended method). 
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  ['1', 'C'],
+  ['2', 'Java'],
+  ['3', 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct'],
+  [false, 'Try Again!'],
+]);
+console.log(question);
+
+// Convery Object To Map
+console.log(Object.entries(openingHours))
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+// Quizz App
+console.log(question.get('question'));
+for (const [key,value] of question) {
+  // Print the key if its a number type
+  if(typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+}
+
+// const answer = Number(prompt('Your answer'));
+const answer = 3; // replace prompt with default value to avoid prompt popping up 
+console.log(answer);
+// question.get('correct') === answer; // true
+console.log(question.get(question.get('correct') === answer)); //Correct
+
+// Convert a Map back to an Array
+console.log([...question]);
+
+// Spread and put into a new aray:
+console.log([...question.entries()]);
+console.log([...question.keys()]);
+console.log([...question.values()]);
 
 // REST PATTERN AND PARAMETERS
 // Similar syntax as spread operator. But Rest Pattern is used to collect multiple elements and condense / pack them into an array.

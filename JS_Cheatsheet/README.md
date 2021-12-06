@@ -19,6 +19,7 @@
 * Logical OR Assignment Operator ||= 
 * Logical Nullish Assignment Operator ??=
 * Logical AND Assignment Operator &&=
+* Optional Chianing ?.
 * Ternary Operator ? :
 * Comparison Operators (>, <, >=, <=)
 * Equality Operators: == vs === 
@@ -101,6 +102,9 @@
 * Destructuring Objects
 * Spread Operator ...
 * For...Of Loop (Iterating over an Array, String, Map)
+* Looping Objects: Object Keys, Values and Entries
+* Sets
+* Conversion of Set to Array using Spread operator ...
 * REST Patterns And Parameters
 * Destructuring in REST
 * Shortcircuiting && and ||

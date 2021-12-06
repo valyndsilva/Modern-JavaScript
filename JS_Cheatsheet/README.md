@@ -79,7 +79,7 @@
 * Array Method .filter()
 * Array Method .map()
 
-## Objects:
+## Data Structures, Modern Operators and Strings:
 * Restrictions in Naming Properties
 * Dot Notation for Accessing Object Properties
 * Accessing non-existent JavaScript properties

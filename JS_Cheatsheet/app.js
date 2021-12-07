@@ -339,7 +339,7 @@ checkBaggage('Got some snacks and a gun for protection'); // You are NOT allowed
 
 
 // .split()
-// It allows us to split a string into multiple parts based on a divider string.
+// It allows us to split a string into multiple parts based on a divider string. It returns an array.
 console.log('a+very+nice+string'.split('+')); // ["a", "very", "nice", "string"]
 console.log('Val Mar',split(' ')); // ["Val", "Mar"];
 // Use destructuring to store
@@ -376,7 +376,8 @@ console.log(message.padStart(18, '+').padEnd(23, '+')); // +++++Go to gate 23+++
 
 // Ex: Masking a credit card number
 const makedCreditCard = function(number){
-  const str = number + '';
+  // const str = number + ''; // alternate way to convert to a string 
+  const str = String(number);
   const last = str.slice(-4);
   return last.padStart(str.length, '*');
 }
@@ -396,6 +397,31 @@ planesInLine(5);
 planesInLine(3);
 planesInLine(12);
 
+// String Methods Practice
+
+const flights = '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrival from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+// const getCode = function(str){
+//   str.slice(0,3).toUpperCase();
+// }
+// Create refactor
+const getCode = str => str.slice(0,3).toUpperCase();
+
+// console.log(flights.split('+'));
+for(const flight of flights.split('+')){
+  // console.log(flight);
+  // console.log(flight.split(';'));
+  const [type, from, to, time] = flight.split(';');
+  // console.log(type);
+  // const output = `${type.startsWith('_Delayed') ? '🔴' : ''} ${type.replaceAll('_', ' ')} ${from.slice(0,3).toUpperCase()} ${to.slice(0,3).toUpperCase()} (${time.replace(':','h')})`;
+  const output = `${type.startsWith('_Delayed') ? '🔴' : ''} ${type.replaceAll('_', ' ')} from ${getCode(from)} to ${getCode(to)} (${time.replace(':','h')})`.padStart(35);
+  console.log(output);
+}
 // OPERATORS:
 
 // Arithmetic Operators:

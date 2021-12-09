@@ -49,14 +49,24 @@
 * switch Statement
 
 ## Functions:
+* Default Parameters
+* Understanding How Arguments Works: Value vs Reference:
+* Defining Functions
+* Calling Functions
 * Function Parameters
 * return Keyword
 * Function Declaration
 * Function Expressions
-* Functions Calling Other Functions
+* First-Class and Higher-Order Functions
+* Function That Receives / Accepts Another Function (Callback Function)
+* Function That Returns A New Function
+* Functions Calling Other Functions / Calling A Function Inside A Function
 * Named Functions
 * Anonymous Functions
 * Arrow Functions (ES6)
+* The .call(), .apply() and .bind() Methods
+* Immediately Invoked Function Expressions (IIFE)
+* Closures
 
 ## Scope:
 * Global scope

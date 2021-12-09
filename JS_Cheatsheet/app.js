@@ -419,7 +419,7 @@ for(const flight of flights.split('+')){
   const [type, from, to, time] = flight.split(';');
   // console.log(type);
   // const output = `${type.startsWith('_Delayed') ? '🔴' : ''} ${type.replaceAll('_', ' ')} ${from.slice(0,3).toUpperCase()} ${to.slice(0,3).toUpperCase()} (${time.replace(':','h')})`;
-  const output = `${type.startsWith('_Delayed') ? '🔴' : ''} ${type.replaceAll('_', ' ')} from ${getCode(from)} to ${getCode(to)} (${time.replace(':','h')})`.padStart(35);
+  const output = `${type.startsWith('_Delayed') ? '🔴' : ''} ${type.replaceAll('_', ' ')} from ${getCode(from)} to ${getCode(to)} (${time.replace(':','h')})`.padStart(45);
   console.log(output);
 }
 // OPERATORS:
@@ -765,6 +765,64 @@ switch (food) {
 
 // A function is a reusable set of statements to perform a task or calculate a value. Functions can be passed one or more values and can return a value at the end of their execution. In order to use a function, you must define it somewhere in the scope where you wish to call it.
 
+// Default Parameters:
+// Default values can contain any type of expression.
+'use strict';
+const bookings = [];
+// const createBooking = function(flightNum, numPassengers, price){
+  const createBooking = function(flightNum, numPassengers = 1, price = 199 * numPassengers){ // ES6 method add default values
+  // // ES5 method using shortcicuiting
+  // numPassengers = numPassengers || 1;
+  // price = price || 199;
+  const booking = {
+    flightNum, // using enhanced object literals syntax
+    numPassengers,
+    price
+  }
+  console.log(booking);
+  bookings.push(booking);
+}
+createBooking('LH123'); // {flightNum: 'LH123', numPassengers: undefined, price: undefined} // Use shortcircuiting to pass a default value since we know that numPassengers and price returns falsy values if no value is passed.
+createBooking('LH123', 2, 800);
+createBooking('LH123', 2);
+createBooking('LH123', 5);
+createBooking('LH123', undefined, 1000); // To skip a default parameter and leave it at it's default value use undefined. 
+
+// Understanding How Arguments Works: Value vs Reference:
+const flight = 'LH1234';
+const val = {
+  name : 'Val Mar',
+  passport: 12345678910
+}
+const checkIn = function(flightNum, passenger){ // const flightNum = flight; const passenger = val
+  flightNum = 'LH999'; // does not affect flight value.
+  passenger.name = 'Ms.' + passenger.name; 
+  if(passenger.passport === 12345678910){
+    alert('Checked In')
+  } else {
+    alert('Wrong Passport!')
+  }
+}
+checkIn(flight, val); // Checked In
+// Passing a primitve type to a function like flightNum is the same as creating a copy outside the function. The value is simply copied.
+console.log(flight); // LH234 
+// Passing an object to a function like passenger is like copying an object val. Whatever is changed in the copy will also change in the original.
+console.log(val); // {name: "Ms. Val Mar", passport:12345678910}
+
+// Object when passed to functions can have consequences in large code bases and when working with multiple developers.
+const newPassport = function(person){
+  person.passport = Math.trunc(Math.random() * 100000000);
+}
+newPassport(val);
+checkIn(flight, val); // Wrong Passport!
+
+// In programming 2 terms used commonly when dealing with functions are: Passing by value + Passing by reference
+// JavaScript does NOT have passing by reference ONLY passing by value.
+// For objects we do pass in a reference i.e the memory address of the object. 
+// However, that reference itself is still simply a value that contains a memory address.
+// Basically we pass a reference to the function but we do not pass by reference.
+
+
 // Defining the function:
 function sum(num1, num2) {
   return num1 + num2;
@@ -836,7 +894,109 @@ const dog = function() {
 // Function declaration can be called before they are defined.
 // Function expressions cannot be called before they are defined.
 
-// Functions Calling Other Functions (using Function Declarations):
+
+
+// First-Class and Higher-Order Functions:
+
+// First-Class Functions:
+// JS treats functions as 1st class citizens meaning functions are simply values.
+// Functions are just another type of object in JS. And since objects are values functions are values too.
+
+// Store functions in variables or properties:
+const add = (a,b) => a + b;
+const counter = { 
+  value: 23,
+  inc: function(){this.value++;}
+}
+// Pass functions as arguments to OTHER functions:
+const greet = () => console.log('Hey Jonas');
+btnClose.addEventListener('click', greet)
+
+// Return functions FROM functions
+
+// Call methods on functions:
+counter.inc.bind(someOtherObject);
+
+// Higher-Order Functions
+// Function that receives another function as an argument, that returns a new function, or both.
+// This is only possible because of First-Class Functions.
+// 1. Function That Receives / Accepts Another Function (Callback Function)
+// 2. Function that returns new function
+
+// 1. Function That Receives / Accepts Another Function (Callback Function):
+const greet = () => console.log('Hey James');
+btnClose.addEventListener('click', greet); // Here, addEventListener -> Higher-Order Function and greet -> Callback Function.
+
+
+// Functions Accepting Callback Functions Examples:
+const oneWord = function(str){ // Lower order of abstraction
+  return str.replace(/ /g, '').toLowerCase();
+}
+const upperFirstWord = function(str){  // Lower order of abstraction
+  const[first, ...others] = str.split(' '); // using REST pattern
+  return [first.toUpperCase(), ...others].join(' ');
+}
+//Higher-Order Function as it takes in another function
+const transformer = function(str, fn){  // Higher order of abstraction
+  console.log(`Original string: ${str}`); 
+  console.log((`Transformed string: ${fn(str)}`)); 
+
+  // Functions have methods and properties. name is a function property.
+  console.log(`Transformed by: ${fn.name}`); 
+}
+transformer('JavaScript is the best!', upperFirstWord); // transformer -> Higher-Order function; upperFirstWord -> Callback function
+// Original string: JavaScript is the best!
+// Transformed string: JAVASCRIPT is the best!
+// Transformed by: upperFirstWord
+
+transformer('JavaScript is the best!', oneWord); // transformer -> Higher-Order function; oneWord -> Callback function
+// Original string: JavaScript is the best!
+// Transformed string: javascriptisthebest!
+// Transformed by: oneWord
+
+// JS uses callbacks all the time
+const high5 = function(){  // Lower order of abstraction
+  console.log('👋');
+};
+document.body.addEventListener('click', high5);  // Higher order of abstraction
+['Jack', 'Jill', 'Hill'].forEach(high5); // Higher order of abstraction
+
+// Using call back functions makes it easy to split up code into more reusable and interconnected parts.
+// CB functions also allow to create abstraction. 
+// It means hiding some details during code implementation because we don't care about all that detail. This allows to think about problems at higher more abstract level.
+
+
+// 2. Function That Returns A New Function:
+function count(){ // Higher-order function
+  let counter = 0;
+  return function(){ // Returned function
+    counter++;
+  };
+}
+
+// Functions Returning Functions Example:
+const greet = function(greeting){
+  return function(name){ // greeterHey function. Works due to Closures
+    console.log(`${greeting} ${name}`);
+  }
+}
+// greet('Hey');
+// 1st function greet returned a new function that we stored in variable greeterHey.
+// Now greeterHey variable is a function that we can call like greeterHey('James'); 
+const greeterHey = greet('Hey'); 
+greeterHey('James'); // Hey James
+greeterHey('Steve'); // Hey Steve
+
+greet('Hello')('John'); // Hello John
+
+// Functional programming is a very important programming paradigm.
+// Write greet as arrow function:
+const greetArr = (greeting) => { (name) => { console.log(`${greeting} ${name}`);}}
+greetArr('Hello')('Jack'); // Hello Jack
+
+
+// 3.Functions Calling Other Functions (Calling A Function Inside A Function):
+// 3A. (using Function Declarations):
 // Ex:
 // function cutFruitPieces(fruit){
 //   return fruit * 4;
@@ -849,7 +1009,7 @@ const dog = function() {
 // }
 //  console.log(fruitProcessor(2,3));
 
-// Functions Calling Other Functions (using Function Expressions):
+// 3B. (using Function Expressions):
 // Ex:
 const cutFruitPieces = function(fruit){
   return fruit * 4;
@@ -876,8 +1036,6 @@ function rocketToMars() {
 const rocketToMars = function() {
   return 'BOOM!';
 }
-
-
 
 // Arrow Functions (ES6):
 // Arrow function expressions were introduced in ES6. These expressions are clean and concise. The syntax for an arrow function expression does not require the function keyword and uses a fat arrow => to separate the parameter(s) from the body.
@@ -937,6 +1095,149 @@ const calcAge = function (birthYear) {
 
 // Arrow Function: Quick one line function. Has no 'this' keyword.
 const calcAge = (birthYear) => 2021 - birthYear;
+
+
+// The .call(), .apply() and .bind() Methods:
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  // book: function(){}
+  book(flightNum, name){ // using enhanced object literals method
+  console.log(`${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`);
+  this.bookings.push({flight:`${this.iataCode}${flightNum}`, name});
+},
+  
+};
+lufthansa.book(239, 'Val Mar');
+lufthansa.book(637, 'Sel Lau');
+console.log(lufthansa);
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+
+}
+
+// Create a book function:
+const book = lufthansa.book; // 'book' method from 'lufthansa' object is no longer a method here but a regular function copy
+
+// book(23, 'Sarah Williams'); // DOES NOT WORK!!!!! // In a regular function call the this keyword in strict mode returns undefined.
+
+// There are 3 function methods call, apply and bind that tell JS explicity how the this keyword should behave. 
+// It allows to manually set the this keyword for any function call.
+
+// Call method: .call()
+// In call method, the 1st argument is what we want the this keyword to point to and the remaining arguments are the original arguments.
+book.call(eurowings, 23, 'Sarah Williams');
+console.log(eurowings);
+book.call(lufthansa, 29, 'Serena Williams');
+console.log(lufthansa);
+
+const swiss = {
+  airline: 'Swiss Air Lines',
+  iataCode: 'LX',
+  bookings: [],
+};
+book.call(swiss, 583, 'Mary Cooper');
+console.log(swiss);
+
+// Apply method: .apply()
+// Apply method does the same as .call() method but it does not receive a list of arguments after the this keyword argument.
+// It instead takes in an array of the arguments. 
+// It will then take the elements from that array and passes it into the function.
+
+const flightData = [582, 'George'];
+book.apply(swiss, flightData); // Same as using call with spread operator
+console.log(swiss);
+
+// .apply() method is not really used much in Mordern JavaScript since we can make use of spread operator ...
+book.call(swiss, ...flightData); // Recommended method is to use the .call() along with spread opreator to unpack the array of data.
+console.log(swiss);
+
+// Bind Method: .bind()
+// Bind method does not immediately call the function.
+// But instead returns a new function where the this keyword is bound.
+// So it is set to whatever value we pass into .bind()
+
+// book.call(eurowings, 23, 'Sarah Williams');
+const bookEW = book.bind(eurowings) // Here bind method creates a new function with 'this' keyword always set to Eurowings.
+bookEW(23, 'Steve Williams');
+console.log(eurowings);
+
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+bookLH(234, 'Steven Williams');
+bookLX(213, 'Staines Williams');
+
+// Presetting an argument in .bind(). This pattern is called partial application
+const bookEW23 = book.bind(eurowings, 23) // bind only specific to flight EW23
+//  Refering to method book(flightNum, name): the flightNum is already set to 23 in the .bind() method so the remaining argument to be set is the name.
+bookEW23('Jacob');
+bookEW23('Krystle');
+
+// Using .bind() with Event Listeners (using objects together with Event Listeners)
+lufthansa.planes = 300; // add new peoprty to lufthansa object
+luftansa.buyPlane = function(){ // add a new method to lufthansa object
+  console.log(this);
+  this.planes++
+  console.log(this.planes); // NaN
+}
+//lufthansa.buyPlane();
+// document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane);
+// <button class="buy">Buy new plane</button> 
+// this.planes is NaN because 'this' keyword is the button element since in an Event handler function the 'this' keyword always points to the element on which that handler function (lufthansa.buyPlane) is attached to.
+
+// to point 'this' keyword to lufthansa object manually define it using .bind()
+document.querySelector('.buy').addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+// Partial Application
+const addTax = (rate,value) => value + value * rate;
+console.log(addTax(0.1, 200)); //220 
+
+// Portugal VAT is 23%. We can use .bind() on addTax function to preset the rate
+const addVAT = addTax.bind(null, 0.23); //set the 1st argument 'this' keyword  to null since we don't need it
+// addVAT = value => value + value * 0.23;
+console.log(addVAT(100)); //123
+
+// Challenge: Write above example by creating function that returns another function:
+const addTaxRate = function(rate){
+  return function(value){
+    return value + value * rate;
+  }
+}
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(100));
+console.log(addTaxRate(0.23)(100));
+
+
+// Immediately Invoked Function Expressions (IIFE)
+// In JavaScript, we sometimes need a function that is executed only once and never again.
+// The function expression needs to be wrapped in () and then called using (); at the end.
+const runOnce = function(){
+  console.log('This will never run again!');
+};
+runOnce();
+
+// IIFE with function expressions
+(function(){ // This function expression is immediately called 
+  console.log('This will never run again!');
+  const isPrivate = 10; // isPrivate is private here and the data is encapsulated inside of this function scope
+})();
+
+// IIFE with Arraow Functions
+(() => console.log('This will never run again!'))();
+
+//In ES6, Variables delared with let and const also create their own scope inside a block.
+// Ex:
+{
+  const isPrivate = 10;
+}
+
+//Closures
+
 
 
 // CHAPTER 4: SCOPE:

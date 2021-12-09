@@ -1226,6 +1226,7 @@ runOnce();
   console.log('This will never run again!');
   const isPrivate = 10; // isPrivate is private here and the data is encapsulated inside of this function scope
 })();
+console.log(isPrivate);
 
 // IIFE with Arraow Functions
 (() => console.log('This will never run again!'))();
@@ -1233,11 +1234,82 @@ runOnce();
 //In ES6, Variables delared with let and const also create their own scope inside a block.
 // Ex:
 {
-  const isPrivate = 10;
+  const isPrivate1 = 10; // this is not accessible out of this block
+  var notPrivate = 20; // this is accessible
+}
+console.log(isPrivate1);
+console.log(notPrivate); 
+
+// In Modern JS IIFEs are not that used anymore since we can create a new scope for data privacy by creating a new block as above.
+// Only if you need to execute a function just once then IFFE pattern is the recommended way.
+
+
+// CLOSURES:
+// Closure makes a function remember all the variables that existed when the functions was created at the beginning.
+// A function always has access to the variable environment (VE) of the Execution context (EC) in which it was created even after that EC is gone.
+// The closure is then basically this variable environment attached to the function exactly as it was when the function was created.
+// Closures has priority over the scope chain. It is the closed-over VE of the EC in which a function was created, even after that EC is gone.
+
+// A closure gives a function access to all the variables of it's parent function, even after that parent function has returned. 
+// The function keeps a reference to it's outer scope, which preserves the scope chain throughout time. Closure makes sure that a function doesn't loose connection to variables that existed at the functions birth place.
+// Closure is like a backpack that a function carries around wherever it goes. This backpack has all the variables that were present in the environment where the function was created.
+
+// We do NOT have to manually create closures, this is a JS feature that happens automatically. We can't even access closed-over variables explicitly. A closure is NOT a tangible JS object.
+
+const secureBooking = function(){
+  let passengerCount = 0;
+
+  return function(){
+    passengerCount++
+    console.log(`${passengerCount} passengers`)
+  }
 }
 
-//Closures
+const booker = secureBooking();
+booker(); // 1 passengers
+booker(); // 2 passengers
+booker(); // 3 passengers
 
+console.dir(booker); // returns an anonymous function with Scopes internal property which is the  Variable environment of the booker function.
+// [[Scopes]] the double brackets means it's an internal property which cannot be inaccessible from the code.
+
+// Closure Example 1:
+let f; // defined outside in global scope.
+const g = function(){
+  const a =23;
+  f = function(){ //
+    console.log(a * 2);
+  }
+}
+
+const h = function(){
+  const b = 777;
+  f = function(){ //
+    console.log(b * 2);
+  }
+
+}
+g(); // 46
+f();
+console.dir(f); // Closure value is a
+
+//Re-assigning f function
+h();
+f();
+console.dir(f); // Closure value a is replaced with b
+
+
+// Closure Example 2: Timer example
+const boardPassengers = function(n, wait){
+  const perGroup = n / 3;
+
+  setTimeout(function(){
+    console.log(`We are now boarding all ${n} passengers`);
+    console.log(`There are 3 groups each with ${perGroup} passengers`);
+  }, wait * 1000);
+  console.log(`Will start boarding in ${wait} seconds`);
+}
+boardPassengers(180, 3);
 
 
 // CHAPTER 4: SCOPE:

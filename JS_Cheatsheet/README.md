@@ -91,9 +91,7 @@
 * Method .reverse()
 * Method .at() (ES2022 Array Method)
 * Looping Arrays: Method .forEach()
-* Looping Arrays: Method .filter()
-* Looping Arrays: Method .map()
-* Looping Arrays: Method .reduce()
+* Data Transformations: Method .map(), .filter(), .reduce()
 
 ## Loops:
 * For Loop

@@ -1571,6 +1571,8 @@ console.log(arr3.at(-1)); // 64 gives last element of the array.
 console.log('valyn'.at(0)); //v
 console.log('valyn'.at(-1)); //n
 
+
+
 // Looping Arrays:
 
 // Array Method .forEach():
@@ -1679,15 +1681,9 @@ currenciesUnique.forEach(function(value, _, map){
   console.log(`${value}: ${value}`);
 })
 
-// Array Method .filter():
-// The .filter() method executes a callback function on each element in an array. The callback function for each of the elements must return either true or false. The returned array is a new array with any elements for which the callback function returns true.
-// Here, the array filteredArray will contain all the elements of randomNumbers > 5.
+// .forEach() returns elements individually on each line and not in an array with side-effects
 
-const randomNumbers = [4, 11, 42, 14, 39];
-const filteredArray = randomNumbers.filter(n => {  
-  return n > 5;
-});
-console.log(filteredArray); //  [11, 42, 14, 39]
+// Data Trasnformation Methods: .map(), .filter(), .reduce():
 
 // Array Method .map(): 
 // The .map() method executes a callback function on each element in an array. It returns a new array containing the return values from the callback function.
@@ -1734,8 +1730,37 @@ const movementsDescriptions = movements.map((movement, index) => `Movement ${ind
   
 );
 console.log(movementsDescriptions);
+// ['Movement 1: You deposited 200', 'Movement 2: You deposited 450', 'Movement 3: You withdrew 400', 'Movement 4: You deposited 3000', 'Movement 5: You withdrew 650', 'Movement 6: You withdrew 130', 'Movement 7: You deposited 70', 'Movement 8: You deposited 1300']
+
+// .map() returns a new array of elements
 
 
+// Array Method .filter():
+// The .filter() method executes a callback function on each element in an array. The callback function for each of the elements must return either true or false. The returned array is a new array with any elements for which the callback function returns true.
+// Here, the array filteredArray will contain all the elements of randomNumbers > 5.
+
+const randomNumbers = [4, 11, 42, 14, 39];
+const filteredArray = randomNumbers.filter(n => {  
+  return n > 5;
+});
+console.log(filteredArray); //  [11, 42, 14, 39]
+
+// Ex 2:
+const movements =[200, 450, -400, 3000, -650, -130, 70, 1300];
+// Recommended method using functional programming
+const deposits = movements.filter(function(mov){
+ return mov > 0;
+});
+console.log(movements);
+console.log(deposits);
+
+// Alternative method using for...of loop
+const depositsFor = [];
+for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+console.log(depositsFor);
+
+const withdrawals = movements.filter((mov) => mov < 0);
+console.log(withdrawals);
 
 // Array Method .reduce():
 // The .reduce() method iterates through an array and returns a single value.
@@ -1752,6 +1777,7 @@ console.log(sum); // 10
 // The final result of running the reducer across all elements of the array is a single value.
 // The first time that the callback is run there is no "return value of the previous calculation". If supplied, an initial value may be used in its place. 
 // Otherwise array element 0 is used as the initial value and iteration starts from the next element (index 1 instead of index 0).
+// reduce((previousValue, currentValue, currentIndex, array) => { ... }, initialValue)
 
 const array1 = [1, 2, 3, 4];
 const reducer = (previousValue, currentValue) => previousValue + currentValue;
@@ -1764,8 +1790,24 @@ console.log(array1.reduce(reducer));
 console.log(array1.reduce(reducer, 5));
 // expected output: 15
 
+// Ex 2:
+const movements =[200, 450, -400, 3000, -650, -130, 70, 1300];
+const balance = movements.reduce(function(accumulator, current, index, array){
+  console.log(`Iteratorion ${index}: ${accumulator}`);
+  return accumulator + current;
+}, 0); // staring initial value with 0
+console.log(balance);
 
+// Using arrow functions:
+const balance = movements.reduce((accumulator, current) =>  accumulator + current, 0); // staring initial value with 0
+console.log(balance);
 
+// Using for...of loop
+let balance2 = 0; // external variable needed when you use for...of.
+for(const mov of movements){
+  balance2 += mov;
+}
+console.log(balance2);
 
 // CHAPTER 6: LOOPS:
 // A loop is a programming tool that is used to repeat a set of instructions. Iterate is a generic term that means “to repeat” in the context of loops. A loop will continue to iterate until a specified condition, commonly known as a stopping condition, is met.

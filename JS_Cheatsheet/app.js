@@ -1301,7 +1301,7 @@ console.dir(f); // Closure value a is replaced with b
 
 // Closure Example 2: Timer example
 const boardPassengers = function(n, wait){
-  const perGroup = n / 3;
+  // const perGroup = n / 3; // Uses this value as Closure has priority over scope chain
 
   setTimeout(function(){
     console.log(`We are now boarding all ${n} passengers`);
@@ -1309,6 +1309,7 @@ const boardPassengers = function(n, wait){
   }, wait * 1000);
   console.log(`Will start boarding in ${wait} seconds`);
 }
+const perGroup = 1000; // If scope chain had priority over the closure the setTimeOut callback function would use this perGroup global variable.
 boardPassengers(180, 3);
 
 
@@ -1409,7 +1410,7 @@ console.log(x === window.x); // true. variables declared with var will create an
 console.log(y === window.y); // false
 console.log(z === window.z); // false
 
-// CHAPTER 5: ARRAYS:
+// CHAPTER 5: WORKING WITH ARRAYS:
 
 // Arrays are lists of ordered, stored data. They can hold items that are of any data type. Arrays are created by using square brackets, with individual elements separated by commas.
 
@@ -1514,10 +1515,220 @@ names.push('Carl');
 // ['Alice', 'Bob', 'Carl']
 
 // Array.concat():
+// This method does not mutate the original array
 const array1 = ['a', 'b', 'c'];
 const array2 = ['d', 'e', 'f'];
 const array3 = array1.concat(array2);
 console.log(array3);
+console.log([...array1, ...array2]); //Same result using spread operators
+// You can choose to use either .conact() method or spread operator
+
+// Array .join()
+console.log(array3.join(' - ')); //a - b - c - d - e - f
+
+
+// Array.slice();
+let arr = ['a', 'b', 'c', 'd', 'e'];
+console.log(arr.slice(2)); // ["c", "d", "e"]
+console.log(arr.slice(2, 4)); // ["c", "d"]
+console.log(arr.slice(-2)); // ["d", "e"]
+console.log(arr.slice(-1));// ["e"]
+console.log(arr.slice(1, -2)); // ["b", "c"]
+console.log(arr.slice()); // any of the 2 ways can be used to create a copy of the array. 
+console.log([...arr]); // any of the 2 ways can be used to create a copy of the array.
+
+// Array.splice(); 
+// syntax: splice(start, deleteCount, item1, item2, itemN)
+// It mutates the array. It returns the new array and mutates / deletes it from the the original array.
+console.log(arr.splice(2));   // ["c", "d", "e"]
+console.log(arr); // ["a", "b"]
+console.log(arr.splice(-1)); // ["b"]
+console.log(arr); // ["a"]
+let arr1 = ['a', 'b', 'c', 'd', 'e'];
+console.log(arr1.splice(1,2)); //["b", "c"] // from position 1, delete 2 elemets and return it.
+console.log(arr1); // ["a", "d", "e"]
+
+
+// Array.reverse()
+// This method mutates the array
+let arr2 = ['a', 'b', 'c', 'd', 'e'];
+console.log(arr2.reverse()); // ['e', 'd', 'c', 'b', 'a']
+console.log(arr2); // ['e', 'd', 'c', 'b', 'a']
+
+// Array.at()
+// .at() works on strings and is also used in method chaining
+let arr3 = [23, 11, 64];
+console.log(arr3[0]); // 23. Common way of taking a value 
+console.log(arr3.at(0)); //23. New way of extracting value of Array at position 0
+
+// Traditional ways of getting the last element
+console.log(arr3[arr3.length-1]); //64. Last position of array
+// console.log(arr3.slice(-1)); // [65] Give array with last value
+console.log(arr3.slice(-1)[0]); // 
+// New way of getting the last element
+console.log(arr3.at(-1)); // 64 gives last element of the array.
+
+console.log('valyn'.at(0)); //v
+console.log('valyn'.at(-1)); //n
+
+// Looping Arrays:
+
+// Array Method .forEach():
+// The .forEach() method executes a callback function once for each array element in order.
+// Here, in the example below the callback function containing a console.log() method will be executed 5 times, once for each element.
+const numbers = [28, 77, 45, 99, 27];
+ 
+numbers.forEach(number => {  
+  console.log(number);
+}); 
+// 28
+// 77
+// 45
+// 99
+// 27
+
+// .forEach() Example:
+const movements =[200, 450, -400, 3000, -650, -130, 70, 1300];
+//Traditional way
+ for (const movement of movements){
+  if (movement > 0){
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdrew ${Math.abs(movement)}`);
+  }
+}
+// You deposited 200
+// You deposited 450
+// You withdrew 400
+// You deposited 3000
+// You withdrew 650
+// You withdrew 130
+// You deposited 70
+// You deposited 1300
+
+  for (const [i, movement] of movements.entries()){
+    if (movement > 0){
+      console.log(`Movement ${i +1}: You deposited ${movement}`);
+    } else {
+      console.log(`Movement ${i +1}: You withdrew ${Math.abs(movement)}`);
+    }
+  }
+// Movement 1: You deposited 200
+// Movement 2: You deposited 450
+// Movement 3: You withdrew 400
+// Movement 4: You deposited 3000
+// Movement 5: You withdrew 650
+// Movement 6: You withdrew 130
+// Movement 7: You deposited 70
+// Movement 8: You deposited 1300
+
+// Using .forEach()
+// forEach is a higher-order function and requires a callback function to let it know what to do.
+// .forEach() passes in the current element, the index and the entire array that we are looping in the correct order function(currentElement, index, array)
+// In for..of loop the 1st element is the index and then the current element
+// continue and break statements do NOT work in forEach loops at all.
+
+movements.forEach(function(movement){
+  if (movement > 0){
+    console.log(`You deposited ${movement}`);
+  } else {
+    console.log(`You withdrew ${Math.abs(movement)}`);
+  }
+})
+// You deposited 200
+// You deposited 450
+// You withdrew 400
+// You deposited 3000
+// You withdrew 650
+// You withdrew 130
+// You deposited 70
+// You deposited 1300
+
+movements.forEach(function(movement, index, array){
+  if (movement > 0){
+    console.log(`Movement ${index +1}: You deposited ${movement}`);
+  } else {
+    console.log(`Movement ${index +1}: You withdrew ${Math.abs(movement)}`);
+  }
+})
+// You deposited 200
+// You deposited 450
+// You withdrew 400
+// You deposited 3000
+// You withdrew 650
+// You withdrew 130
+// You deposited 70
+// You deposited 1300
+
+// .forEach with Maps and Sets:
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach(function(value, key, map){
+  console.log(`${key}: ${value}`)
+})
+
+// .forEach with Maps and Sets:
+// A set does NOT have Keys / Indexes but to avoid confusion the key (_) parameters was left untouched. - means a throwaway varaible which is unnecessary.
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currenciesUnique);
+currenciesUnique.forEach(function(value, _, map){
+  console.log(`${value}: ${value}`);
+})
+
+// Array Method .filter():
+// The .filter() method executes a callback function on each element in an array. The callback function for each of the elements must return either true or false. The returned array is a new array with any elements for which the callback function returns true.
+// Here, the array filteredArray will contain all the elements of randomNumbers but 4.
+
+const randomNumbers = [4, 11, 42, 14, 39];
+const filteredArray = randomNumbers.filter(n => {  
+  return n > 5;
+});
+console.log(filteredArray); //  [11, 42, 14, 39]
+
+// Array Method .map():
+// The .map() method executes a callback function on each element in an array. It returns a new array made up of the return values from the callback function.
+// The original array does not get altered, and the returned array may contain different elements than the original array.
+const finalParticipants = ['Taylor', 'Donald', 'Don', 'Natasha', 'Bobby'];
+ 
+const announcements = finalParticipants.map(member => {
+  return member + ' joined the contest.';
+})
+ 
+console.log(announcements);
+
+// Array Method .reduce():
+// The .reduce() method iterates through an array and returns a single value.
+// It takes a callback function with two parameters (accumulator, currentValue) as arguments. On each iteration, accumulator is the value returned by the last iteration, and the currentValue is the current element. Optionally, a second argument can be passed which acts as the initial value of the accumulator.
+// Here, the .reduce() method will sum all the elements of the array.
+const arrayOfNumbers = [1, 2, 3, 4];
+ 
+const sum = arrayOfNumbers.reduce((accumulator, currentValue) => {  
+  return accumulator + currentValue;
+});
+console.log(sum); // 10
+
+// The reduce() method executes a user-supplied “reducer” callback function on each element of the array, in order, passing in the return value from the calculation on the preceding element. 
+// The final result of running the reducer across all elements of the array is a single value.
+// The first time that the callback is run there is no "return value of the previous calculation". If supplied, an initial value may be used in its place. 
+// Otherwise array element 0 is used as the initial value and iteration starts from the next element (index 1 instead of index 0).
+
+const array1 = [1, 2, 3, 4];
+const reducer = (previousValue, currentValue) => previousValue + currentValue;
+
+// 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer));
+// expected output: 10
+
+// 5 + 1 + 2 + 3 + 4
+console.log(array1.reduce(reducer, 5));
+// expected output: 15
+
+
+
 
 // CHAPTER 6: LOOPS:
 // A loop is a programming tool that is used to repeat a set of instructions. Iterate is a generic term that means “to repeat” in the context of loops. A loop will continue to iterate until a specified condition, commonly known as a stopping condition, is met.
@@ -1737,66 +1948,9 @@ printMsg(isEven, 4);
 
 //printMsg is a higher-order function and isEven is a Callback Function.
 
-// Array Method .reduce():
-// The .reduce() method iterates through an array and returns a single value.
-// It takes a callback function with two parameters (accumulator, currentValue) as arguments. On each iteration, accumulator is the value returned by the last iteration, and the currentValue is the current element. Optionally, a second argument can be passed which acts as the initial value of the accumulator.
-// Here, the .reduce() method will sum all the elements of the array.
-const arrayOfNumbers = [1, 2, 3, 4];
- 
-const sum = arrayOfNumbers.reduce((accumulator, currentValue) => {  
-  return accumulator + currentValue;
-});
-console.log(sum); // 10
-
-// The reduce() method executes a user-supplied “reducer” callback function on each element of the array, in order, passing in the return value from the calculation on the preceding element. 
-// The final result of running the reducer across all elements of the array is a single value.
-// The first time that the callback is run there is no "return value of the previous calculation". If supplied, an initial value may be used in its place. 
-// Otherwise array element 0 is used as the initial value and iteration starts from the next element (index 1 instead of index 0).
-
-const array1 = [1, 2, 3, 4];
-const reducer = (previousValue, currentValue) => previousValue + currentValue;
-
-// 1 + 2 + 3 + 4
-console.log(array1.reduce(reducer));
-// expected output: 10
-
-// 5 + 1 + 2 + 3 + 4
-console.log(array1.reduce(reducer, 5));
-// expected output: 15
 
 
-// Array Method .forEach():
-// The .forEach() method executes a callback function once for each array element in order.
-// Here, in the example below the callback function containing a console.log() method will be executed 5 times, once for each element.
-const numbers = [28, 77, 45, 99, 27];
- 
-numbers.forEach(number => {  
-  console.log(number);
-}); 
-
-// Array Method .filter():
-// The .filter() method executes a callback function on each element in an array. The callback function for each of the elements must return either true or false. The returned array is a new array with any elements for which the callback function returns true.
-// Here, the array filteredArray will contain all the elements of randomNumbers but 4.
-
-const randomNumbers = [4, 11, 42, 14, 39];
-const filteredArray = randomNumbers.filter(n => {  
-  return n > 5;
-});
-
-// Array Method .map():
-// The .map() method executes a callback function on each element in an array. It returns a new array made up of the return values from the callback function.
-// The original array does not get altered, and the returned array may contain different elements than the original array.
-const finalParticipants = ['Taylor', 'Donald', 'Don', 'Natasha', 'Bobby'];
- 
-const announcements = finalParticipants.map(member => {
-  return member + ' joined the contest.';
-})
- 
-console.log(announcements);
-
-
-
-// CHAPTER 8: OBJECTS:
+// CHAPTER 8: Data Structures and Modern Operators:
 
 // An object is a built-in data type for storing key-value pairs. Data inside objects are unordered, and the values can be of any type.
 

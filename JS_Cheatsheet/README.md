@@ -48,7 +48,7 @@
 * Truthy and Falsy statement:
 * switch Statement
 
-## Functions:
+## Working with Functions:
 * Default Parameters
 * Understanding How Arguments Works: Value vs Reference:
 * Defining Functions
@@ -75,7 +75,7 @@
 * Code Block scope
 * Hoisting
 
-## Arrays:
+## Working With Arrays:
 * Index
 * Property .length
 * Method .push()
@@ -85,6 +85,15 @@
 * Method .indexOf()
 * ES6 Method .includes()
 * Method .concat()
+* Method .join()
+* Method .slice()
+* Method .splice()
+* Method .reverse()
+* Method .at() (ES2022 Array Method)
+* Looping Arrays: Method .forEach()
+* Looping Arrays: Method .filter()
+* Looping Arrays: Method .map()
+* Looping Arrays: Method .reduce()
 
 ## Loops:
 * For Loop
@@ -99,10 +108,6 @@
 * Functions Assigned to Variables
 * Callback Functions
 * Higher-Order Functions
-* Array Method .reduce()
-* Array Method .forEach()
-* Array Method .filter()
-* Array Method .map()
 
 ## Data Structures and Modern Operators:
 * Restrictions in Naming Properties

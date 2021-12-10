@@ -1681,7 +1681,7 @@ currenciesUnique.forEach(function(value, _, map){
 
 // Array Method .filter():
 // The .filter() method executes a callback function on each element in an array. The callback function for each of the elements must return either true or false. The returned array is a new array with any elements for which the callback function returns true.
-// Here, the array filteredArray will contain all the elements of randomNumbers but 4.
+// Here, the array filteredArray will contain all the elements of randomNumbers > 5.
 
 const randomNumbers = [4, 11, 42, 14, 39];
 const filteredArray = randomNumbers.filter(n => {  
@@ -1689,8 +1689,8 @@ const filteredArray = randomNumbers.filter(n => {
 });
 console.log(filteredArray); //  [11, 42, 14, 39]
 
-// Array Method .map():
-// The .map() method executes a callback function on each element in an array. It returns a new array made up of the return values from the callback function.
+// Array Method .map(): 
+// The .map() method executes a callback function on each element in an array. It returns a new array containing the return values from the callback function.
 // The original array does not get altered, and the returned array may contain different elements than the original array.
 const finalParticipants = ['Taylor', 'Donald', 'Don', 'Natasha', 'Bobby'];
  
@@ -1699,6 +1699,43 @@ const announcements = finalParticipants.map(member => {
 })
  
 console.log(announcements);
+
+// Ex 2:
+const movements =[200, 450, -400, 3000, -650, -130, 70, 1300];
+const eurToUsd = 1.1;
+
+// Calculate using a more functional programming paradigm approach
+const movementsUSD = movements.map(function(movement){
+  return movement * eurToUsd;
+})
+
+// Write using arrow functions
+// const movementsUSD = movements.map((movement) => movement * eurToUsd);
+
+console.log(movements);
+console.log(movementsUSD);
+
+// Alternative method to calculate USD without creating a function
+const movementsUSDfor = [];
+for(const mov of movements){
+  movementsUSDfor.push(mov * eurToUsd);
+}
+console.log(movementsUSDfor);
+
+// Using arrow functions
+const movementsDescriptions = movements.map((movement, index) => `Movement ${index + 1}: You ${movement > 0 ? 'deposited': 'withdrew'} ${Math.abs(movement)}`
+  
+  // if (movement > 0){
+  //  return `Movement ${index +1}: You deposited ${movement}`;
+  // } else {
+  //  return `Movement ${index +1}: You withdrew ${Math.abs(movement)}`;
+  // }
+
+  
+);
+console.log(movementsDescriptions);
+
+
 
 // Array Method .reduce():
 // The .reduce() method iterates through an array and returns a single value.

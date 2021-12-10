@@ -77,6 +77,7 @@ const displayMovements = function(movements){
   // Display movements in the containerMovements
   containerMovements.insertAdjacentHTML('afterbegin', html); // element.insertAdjacentHTML(position, text); position has 4 options: beforebegin, afterbegin, beforeend, afterend
   // Refer https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+  // afterbegin: new child element is appended to older child elements and will be on top
   })
 }
 displayMovements(account1.movements);

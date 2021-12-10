@@ -61,7 +61,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-
+ // 1. Display Movements in the containerMovements
 const displayMovements = function(movements){
   // Empty the container before fetching data
   containerMovements.innerHTML = '';
@@ -74,7 +74,7 @@ const displayMovements = function(movements){
     <div class="movements__value">${movement}</div>
     </div>
   `;
-  // Display movements in the containerMovements
+
   containerMovements.insertAdjacentHTML('afterbegin', html); // element.insertAdjacentHTML(position, text); position has 4 options: beforebegin, afterbegin, beforeend, afterend
   // Refer https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
   // afterbegin: new child element is appended to older child elements and will be on top
@@ -83,7 +83,14 @@ const displayMovements = function(movements){
 displayMovements(account1.movements);
 // console.log(containerMovements.innerHTML);
 
-// Computing Username
+// 3. Calculate and Display Balance
+const calcDisplayBalance = function(movements){
+  const balance = movements.reduce((accumulator, currentMov) => accumulator + currentMov, 0);
+  labelBalance.textContent = `${balance} EUR`
+};
+calcDisplayBalance(account1.movements);
+
+// 2. Computing Username
 const createUsernames = function(accs){
   accs.forEach(function(acc){
    acc.username = acc.owner.toLowerCase().split(' ').map((name) => name.at(0)).join(''); // stw
@@ -95,9 +102,8 @@ console.log(accounts);
 
 // const username = user.toLowerCase().split(' '); // ["steven", "thomas", "williams"]
 // const username = user.toLowerCase().split(' ').map(function(name){
-//   return name.at(0);
+//   return name.at(0); // ["s", "t", "w"]
 // }).join(''); // stw
-
 
 
 /////////////////////////////////////////////////

@@ -83,6 +83,22 @@ const displayMovements = function(movements){
 displayMovements(account1.movements);
 // console.log(containerMovements.innerHTML);
 
+// Computing Username
+const createUsernames = function(accs){
+  accs.forEach(function(acc){
+   acc.username = acc.owner.toLowerCase().split(' ').map((name) => name.at(0)).join(''); // stw
+  })
+
+};
+console.log(createUsernames(accounts));
+console.log(accounts);
+
+// const username = user.toLowerCase().split(' '); // ["steven", "thomas", "williams"]
+// const username = user.toLowerCase().split(' ').map(function(name){
+//   return name.at(0);
+// }).join(''); // stw
+
+
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////

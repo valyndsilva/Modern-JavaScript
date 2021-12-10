@@ -1660,7 +1660,7 @@ movements.forEach(function(movement, index, array){
 // You deposited 70
 // You deposited 1300
 
-// .forEach with Maps and Sets:
+// .forEach with Maps:
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
@@ -1671,8 +1671,8 @@ currencies.forEach(function(value, key, map){
   console.log(`${key}: ${value}`)
 })
 
-// .forEach with Maps and Sets:
-// A set does NOT have Keys / Indexes but to avoid confusion the key (_) parameters was left untouched. - means a throwaway varaible which is unnecessary.
+// .forEach with Sets:
+// A set does NOT have Keys / Indexes but to avoid confusion the key (_) parameter was left untouched. - means a throwaway varaible which is unnecessary.
 const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
 console.log(currenciesUnique);
 currenciesUnique.forEach(function(value, _, map){

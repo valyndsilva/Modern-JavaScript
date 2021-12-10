@@ -61,6 +61,28 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+
+const displayMovements = function(movements){
+  // Empty the container before fetching data
+  containerMovements.innerHTML = '';
+  movements.forEach(function(movement, index){
+    const type = movement > 0 ? 'deposit' : 'withdrawal';
+    const html = `
+    <div class="movements__row">
+    <div class="movements__type movements__type--${type}">${index + 1} ${type}</div>
+    <div class="movements__date">3 days ago</div>
+    <div class="movements__value">${movement}</div>
+    </div>
+  `;
+  // Display movements in the containerMovements
+  containerMovements.insertAdjacentHTML('afterbegin', html); // element.insertAdjacentHTML(position, text); position has 4 options: beforebegin, afterbegin, beforeend, afterend
+  // Refer https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML
+  })
+}
+displayMovements(account1.movements);
+// console.log(containerMovements.innerHTML);
+
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -74,3 +96,5 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+
+
